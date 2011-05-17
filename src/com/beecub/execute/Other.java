@@ -1,12 +1,12 @@
-package execute;
+package com.beecub.execute;
 
 import org.bukkit.entity.Player;
 
 import com.beecub.glizer.glizer;
+import com.beecub.util.bChat;
+import com.beecub.util.bConfigManager;
+import com.beecub.util.bPermissions;
 
-import util.bChat;
-import util.bConfigManager;
-import util.bPermissions;
 
 public class Other {
     

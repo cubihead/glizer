@@ -1,19 +1,20 @@
-package command;
+package com.beecub.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import execute.Ban;
-import execute.Comment;
-import execute.Friend;
-import execute.Note;
-import execute.Other;
-import execute.Profile;
-import execute.Rating;
-import execute.Warning;
+import com.beecub.execute.Ban;
+import com.beecub.execute.Comment;
+import com.beecub.execute.Friend;
+import com.beecub.execute.Note;
+import com.beecub.execute.Other;
+import com.beecub.execute.Profile;
+import com.beecub.execute.Rating;
+import com.beecub.execute.Warning;
+import com.beecub.util.bChat;
 
-import util.bChat;
+
 
 public class bCommandRouter {
     public static boolean handleCommands(CommandSender sender, Command c, String commandLabel, String[] args) {

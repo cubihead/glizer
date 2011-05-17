@@ -1,26 +1,25 @@
-package execute;
+package com.beecub.execute;
 
 import org.bukkit.entity.Player;
 
-import util.bChat;
-import util.bPermissions;
 
 import com.beecub.glizer.glizer;
+import com.beecub.util.bChat;
+import com.beecub.util.bPermissions;
 
-public class Warning {
+public class Comment {
 
-    public static boolean warn(String command, Player player, String[] args) {
+    public static boolean comment(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
-            if(args.length >= 3) {
+            if(args.length >= 2) {
                 String message = "";
                 String recipient = args[0];
                 String sender = player.getName();
-                int value = Integer.valueOf(args[1]);
-                for(int i = 2; i < args.length; i++) {
+                for(int i = 1; i < args.length; i++) {
                     message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    // send warning to krim
+                    // send comment to krim
                     return true;
                 }
             }
@@ -30,10 +29,10 @@ public class Warning {
         return true;
     }
     
-    public static boolean warnings(String command, Player player, String[] args) {
+    public static boolean comments(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
-                // get warnings from krim
+                // get comments from krim
                 return true;
             }
             bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);

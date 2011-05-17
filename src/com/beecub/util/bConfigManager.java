@@ -1,4 +1,4 @@
-package util;
+package com.beecub.util;
 
 import java.io.File;
 import java.util.LinkedList;

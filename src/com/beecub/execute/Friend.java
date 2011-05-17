@@ -1,11 +1,11 @@
-package execute;
+package com.beecub.execute;
 
 import org.bukkit.entity.Player;
 
-import util.bChat;
-import util.bPermissions;
 
 import com.beecub.glizer.glizer;
+import com.beecub.util.bChat;
+import com.beecub.util.bPermissions;
 
 public class Friend {
 

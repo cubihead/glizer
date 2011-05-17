@@ -1,4 +1,4 @@
-package execute;
+package com.beecub.execute;
 
 import org.bukkit.entity.Player;
 

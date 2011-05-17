@@ -1,4 +1,4 @@
-package util;
+package com.beecub.util;
 
 import org.bukkit.entity.Player;
 

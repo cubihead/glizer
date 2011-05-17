@@ -10,12 +10,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import util.bChat;
-import util.bConfigManager;
 
+import com.beecub.command.bCommandRouter;
+import com.beecub.util.bChat;
+import com.beecub.util.bConfigManager;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
-import command.bCommandRouter;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
