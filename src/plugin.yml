@@ -1,0 +1,111 @@
+name: glizer
+main: com.beecub.glizer.glizer
+version: 0.0.1
+author: beecub
+description: >
+             Minecraft Globalizer
+commands:
+  command:
+    description:
+    usage: |
+           /<command>
+  ban:
+    description: Ban player
+    usage: |
+           /<command> [name] [comment]
+  localban:
+    description: Unban player
+    usage: |
+           /<command> [name] [comment]
+  tempban:
+    description: Unban player
+    usage: |
+           /<command> [name] [time] [comment]
+  removebanwhitelist:
+    description: Whitelist a player from global bans (on your server)
+    usage: |
+           /<command> [name]
+  addbanwhitelist:
+    description: Whitelist a player from global bans (on your server)
+    usage: |
+           /<command> [name]
+  unban:
+    description: Unban player
+    usage: |
+           /<command> [name] [comment]
+  note:
+    description: Admin comment to player
+    usage: |
+           /<command> [name] [value] [comment]
+  notes:
+    description: Show admin comments to player
+    usage: |
+           /<command> [name]
+  warn:
+    description: Caution a player
+    usage: |
+           /<command> [name] [value] [comment]
+  warnings:
+    description: Show cautions to a player
+    usage: |
+           /<command> [name]
+  register:
+    description: Register player to system
+    usage: |
+           /<command> [password]
+  comment:
+    description: Add comment to player
+    usage: |
+           /<command> [name] [comment]
+  comments:
+    description: Show comments to player
+    usage: |
+           /<command> [name]
+  rateplayer:
+    description: Rate player
+    usage: |
+           /<command> [name] [value]
+  rateserver:
+    description: Rate server
+    usage: |
+           /<command> [value]
+  profile:
+    description: Show players profile
+    usage: |
+           /<command> [name]
+  editprofile: Edit profile field
+    description:
+    usage: |
+           /<command> [fieldname] [text/value]
+  clearprofile: Clear whole profile
+    description:
+    usage: |
+           /<command>
+  gm:
+    description: Send message to a player, whereever on which server he is connectet
+    usage: |
+           /<command> [name] [text]
+  friends:
+    description: Show all online friends and on which server theyre playing
+    usage: |
+           /<command>
+  addfriend:
+    description: Add a player to your friend list
+    usage: |
+           /<command> [name]
+  removefriend:
+    description: Remove a friend from your friend list
+    usage: |
+           /<command> [name]
+  glizerhelp:
+    description: Help to glizer plugin
+    usage: |
+           /<command> [page]
+  glizer:
+    description: reload glizer config
+    usage: |
+           /<command> [reload]
+  theanswertolifetheuniverseandeverything:
+    description: The Answer to Life the Universum and Everything.
+    usage: |
+           /<command>
