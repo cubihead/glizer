@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
+import com.beecub.util.bConnector;
 import com.beecub.util.bPermissions;
 
 
@@ -61,8 +62,8 @@ public class Other {
         
 //        HashMap<String, String> url_items = new HashMap<String, String>();
 //        url_items.put("exec", "server_premium");
-
-        JSONObject result = glizer.hdl_com(url_items);
+        
+        JSONObject result = bConnector.hdl_com(url_items);
         try {
             if(result.getString("response") == "ok");
                 // output: "wurde erfolgreich gebannt"

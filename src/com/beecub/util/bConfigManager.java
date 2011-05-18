@@ -12,9 +12,9 @@ public class bConfigManager {
 	protected static glizer plugin;
     protected static Configuration conf;
     protected static Configuration backupban;
-    
     public static List<String> bannedPlayers = new LinkedList<String>();
     public static List<String> banwhitelistPlayers = new LinkedList<String>();
+    public static String key;    
     
 	
     public bConfigManager(glizer glizer) {
@@ -29,6 +29,7 @@ public class bConfigManager {
     	backupban.load();
     	
     	banwhitelistPlayers = backupban.getKeys("banwhitelist");
+    	key = conf.getString("APIkey", null);
     }
 	
 	public static void reload() {
