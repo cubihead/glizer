@@ -13,16 +13,20 @@ commands:
     description: Ban player
     usage: |
            /<command> [name] [comment]
+  globalban:
+    description: Global ban
+    usage: |
+           /<command> [name] [comment]
   localban:
-    description: Unban player
+    description: Local ban
     usage: |
            /<command> [name] [comment]
   tempban:
-    description: Unban player
+    description: Temporary Ban
     usage: |
            /<command> [name] [time] [comment]
   removebanwhitelist:
-    description: Whitelist a player from global bans (on your server)
+    description: Remove a global banned whitelisted player (on your server)
     usage: |
            /<command> [name]
   addbanwhitelist:
@@ -73,12 +77,12 @@ commands:
     description: Show players profile
     usage: |
            /<command> [name]
-  editprofile: Edit profile field
-    description:
+  editprofile:
+    description: Edit profile field
     usage: |
            /<command> [fieldname] [text/value]
-  clearprofile: Clear whole profile
-    description:
+  clearprofile:
+    description: Clear whole profile
     usage: |
            /<command>
   gm:

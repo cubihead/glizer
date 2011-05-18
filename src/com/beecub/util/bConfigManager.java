@@ -54,7 +54,7 @@ public class bConfigManager {
 	
 	@SuppressWarnings("static-access")
     private void setupbackupban() {
-        File f = new File(plugin.getDataFolder(), "backupban.yml");
+        File f = new File(plugin.getDataFolder() + "/backup/", "backupban.yml");
         backupban = null;
         
         if (f.exists())
@@ -64,7 +64,7 @@ public class bConfigManager {
         }
         else {
             File confFile;
-            confFile = new File(plugin.getDataFolder(), "backupban.yml");
+            confFile = new File(plugin.getDataFolder()+ "/backup/", "backupban.yml");
             this.backupban = new Configuration(confFile);
             backupban.save();
         }

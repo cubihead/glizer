@@ -129,6 +129,10 @@ public class bCommandRouter {
                 Friend.friends(command, player, args);
                 return true;
             }
+            else if(command.equals("theanswertolifetheuniverseandeverything")) {
+                Other.theanswertolifetheuniverseandeverything(command, player, args);
+                return true;
+            }
             else {
                 bChat.sendMessageToPlayer(player, "Not a glizer command");
                 return true;

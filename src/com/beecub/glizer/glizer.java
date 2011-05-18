@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import com.beecub.command.bCommandRouter;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
+import com.beecub.util.bTextManager;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -32,12 +33,10 @@ import java.util.logging.Logger;
 
 public class glizer extends JavaPlugin {
 	private final glizerPlayerListener playerListener = new glizerPlayerListener(this);
-	private final glizerBlockListener signListener = new glizerBlockListener(this);
 	public static Logger log = Logger.getLogger("Minecraft");
 	public static PluginDescriptionFile pdfFile;
 	public static PermissionHandler Permissions;
 	public static boolean permissions = false;
-	private static String key;
 	public static String messageWrongCommandUsage;
 	public static String messagePermissions;
 	public static String messagePluginName;
@@ -47,10 +46,11 @@ public class glizer extends JavaPlugin {
 
 		pdfFile = this.getDescription();
 		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Event.Priority.Lowest, this);
-	    pm.registerEvent(Event.Type.SIGN_CHANGE, signListener, Event.Priority.Lowest, this);
+		pm.registerEvent(Event.Type.PLAYER_PRELOGIN, playerListener, Event.Priority.Lowest, this);
+		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Normal, this);
 	    
 		bConfigManager bConfigManager = new bConfigManager(this);
+		bTextManager bTextManager = new bTextManager(this);
 		bChat bChat = new bChat(this.getServer());
 		
 		if(setupPermissions()){
@@ -100,12 +100,42 @@ public class glizer extends JavaPlugin {
 	    return bCommandRouter.handleCommands(sender, c, commandLabel, args);	    
 	}
 	
-	public HashMap<String, String> hdl_com(HashMap<String, String> items) 
+	public static JSONObject hdl_com(HashMap<String, String> items) 
     {
-        HashMap<String, String> out = new HashMap<String, String>(); //Ausgebende Hashmap
-        String url_req = this.urlparse(items); //Wandelt die Hashmap um in einen String, welcher dem Request mit übergeben wird (funktion siehe unten)
-        String json_text = this.request_from_api(url_req); // Stellt die Anfrage an die API (sendet also den Request - erhält String der Rückgabe vom Server (noch encoded als json)
-        JSONObject output = this.get_data(json_text); //Wandelt den Json Code in ein Json Objekt um
+        //HashMap<String, String> out = new HashMap<String, String>(); //Ausgebende Hashmap
+        String url_req = urlparse(items); //Wandelt die Hashmap um in einen String, welcher dem Request mit übergeben wird (funktion siehe unten)
+        log.info("url_req " + url_req);
+        String json_text = request_from_api(url_req); // Stellt die Anfrage an die API (sendet also den Request - erhält String der Rückgabe vom Server (noch encoded als json)
+        JSONObject output = get_data(json_text); //Wandelt den Json Code in ein Json Objekt um
+        
+        
+        return output;
+//        
+//        //Verifikation ob Objekt in Ordnung ist und wandelt in HashMap um
+//        if (output != null)
+//        {
+//            Iterator<?> i = output.keys();
+//            if (i != null) {
+//                while (i.hasNext())
+//                {
+//                    String next = (String)i.next();
+//                    try 
+//                    {
+//                        out.put(next, output.getString(next));
+//                    } catch (JSONException e) {
+//                        System.out.println("error");
+//                    }
+//                }
+//            }
+//        }
+//        return out;
+    }
+	
+	public static HashMap<String, String> hdl_com(String items) {
+	    HashMap<String, String> out = new HashMap<String, String>(); //Ausgebende Hashmap
+        //String url_req = urlparse(items); //Wandelt die Hashmap um in einen String, welcher dem Request mit übergeben wird (funktion siehe unten)
+        String json_text = request_from_api(items); // Stellt die Anfrage an die API (sendet also den Request - erhält String der Rückgabe vom Server (noch encoded als json)
+        JSONObject output = get_data(json_text); //Wandelt den Json Code in ein Json Objekt um
         
         //Verifikation ob Objekt in Ordnung ist und wandelt in HashMap um
         if (output != null)
@@ -125,10 +155,10 @@ public class glizer extends JavaPlugin {
             }
         }
         return out;
-    }
+	}
 	
     @SuppressWarnings("rawtypes")
-    public String urlparse(HashMap<String, String> items) {
+    public static String urlparse(HashMap<String, String> items) {
         String data = "";
         try {
             for (Map.Entry entry : items.entrySet()) {
@@ -146,16 +176,17 @@ public class glizer extends JavaPlugin {
     }
 
 
-    public String request_from_api(String data) {
+    public static String request_from_api(String data) {
         try {
-            //Dies muss angepasst werden. IP ist etwas blöde, immer Hostnames verwenden.
-            //Solltest du GET verwenden müssen - einfach den data hier anhängen via + '?' + data
-            URL url = new URL("http://api.glizer.de/index.php/" + key);
+            
+            //URL url = new URL("http://api.glizer.de/index.php/" + key);
+            URL url = new URL("http://dev.wmchris.de/projects/bans/rpc.php" /*+ key*/);
+            
             URLConnection conn = url.openConnection();
             conn.setConnectTimeout(8000);
             conn.setReadTimeout(15000);
             conn.setDoOutput(true);
-      
+            
             //Öffne den Stream zum Server und sende den String "data" an diesen. Für ein POST fehlen einige Daten
             //Vermute, dass der Server diese RAW empfängt. Eventuell umstellen auf GET (siehe Oben)
             //Müssen wir einfach mal testen indem du eine Anfrage gegen den Server machst und ich schaue ob ich
@@ -182,12 +213,12 @@ public class glizer extends JavaPlugin {
             rd.close();
             return result;
         } catch (Exception e) {
-            System.out.println("bans error");
+            System.out.println("error");
         }
         return "";
     }
       
-    public JSONObject get_data(String json_text) {
+    public static JSONObject get_data(String json_text) {
         try {
             JSONObject json = new JSONObject(json_text);
             return json;
