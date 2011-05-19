@@ -49,7 +49,7 @@ public class bConnector {
     public static String APIRequest(String data) {
         try {
             
-            URL url = new URL("http://dev.wmchris.de/projects/bans/rpc.php" + bConfigManager.key);
+            URL url = new URL("http://api.glizer.de/" + bConfigManager.key + "/");
             
             URLConnection conn = url.openConnection();
             conn.setConnectTimeout(8000);

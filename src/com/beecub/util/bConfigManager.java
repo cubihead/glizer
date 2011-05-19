@@ -11,25 +11,28 @@ public class bConfigManager {
 	
 	protected static glizer plugin;
     protected static Configuration conf;
-    protected static Configuration backupban;
     public static List<String> bannedPlayers = new LinkedList<String>();
     public static List<String> banwhitelistPlayers = new LinkedList<String>();
-    public static String key;    
+    public static String key;
+    public static String servername;
+    public static String owner;
+    public static String globalreputation;
+    public static String minimumreputationtoconnect;
     
 	
     public bConfigManager(glizer glizer) {
     	plugin = glizer;
     	setupconf();
-    	setupbackupban();
     	load();
-    }    
+    }
     
 	private static void load() {
     	conf.load();
-    	backupban.load();
     	
-    	banwhitelistPlayers = backupban.getKeys("banwhitelist");
     	key = conf.getString("APIkey", null);
+    	servername = conf.getString("servername", null);
+    	owner = conf.getString("owner", null);
+    	minimumreputationtoconnect = conf.getString("minimumreputationtoconnect", "-40");
     }
 	
 	public static void reload() {
@@ -49,45 +52,11 @@ public class bConfigManager {
             File confFile;
             confFile = new File(plugin.getDataFolder(), "config.yml");
             conf = new Configuration(confFile);
+            conf.setProperty("APIkey", "0");
+            conf.setProperty("servername", "name");
+            conf.setProperty("owner", "playername");
+            conf.setProperty("minimumreputationtoconnect", "-40");
             conf.save();
         }
-	}
-	
-	@SuppressWarnings("static-access")
-    private void setupbackupban() {
-        File f = new File(plugin.getDataFolder() + "/backup/", "backupban.yml");
-        backupban = null;
-        
-        if (f.exists())
-        {
-            backupban = new Configuration(f);
-            backupban.load();            
-        }
-        else {
-            File confFile;
-            confFile = new File(plugin.getDataFolder()+ "/backup/", "backupban.yml");
-            this.backupban = new Configuration(confFile);
-            backupban.save();
-        }
-	}
-	
-	public static boolean removebanwhitelist(String name) {
-	    if(banwhitelistPlayers.contains(name)) {
-	        backupban.removeProperty("banwhitelist." + name);
-	        backupban.save();
-	        banwhitelistPlayers = backupban.getKeys("banwhitelist");
-	        return true;
-	    }
-	    return false;
-	}
-	
-	public static boolean addbanwhitelist(String name) {
-	    if(!banwhitelistPlayers.contains(name)) {
-	        backupban.setProperty("banwhitelist." + name, true);
-	        backupban.save();
-	        banwhitelistPlayers = backupban.getKeys("banwhitelist");
-            return true;
-        }
-        return false;
 	}
 }

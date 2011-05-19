@@ -1,5 +1,6 @@
 package com.beecub.glizer;
 
+import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
@@ -7,27 +8,18 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
 import com.beecub.command.bCommandRouter;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
+import com.beecub.util.bConnector;
 import com.beecub.util.bTextManager;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -56,13 +48,13 @@ public class glizer extends JavaPlugin {
 		bTextManager bTextManager = new bTextManager(this);
 		bChat bChat = new bChat(this.getServer());
 		
-		serverip = this.getServer().getIp();
-		
-		
 		if(setupPermissions()){
 		}
 		
 		if(setupMessages()) {
+		}
+		
+		if(serverlogin()) {
 		}
 		
 		PluginDescriptionFile pdfFile = this.getDescription();
@@ -71,38 +63,72 @@ public class glizer extends JavaPlugin {
 	public void onDisable() {
 		log.info(messagePluginName + " version " + pdfFile.getVersion() + " disabled!");
 	}
-		
-	
-	// setup permissions
-	private boolean setupPermissions() {
-		Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
-		if (glizer.Permissions == null) {
-			if (test != null) {
-				glizer.Permissions = ((Permissions)test).getHandler();
-				log.info(messagePluginName + "Permission system found");
-				permissions = true;
-				return true;
-			}
-			else {
-				log.info(messagePluginName + "Permission system not detected, plugin disabled");
-				this.getServer().getPluginManager().disablePlugin(this);
-				permissions = false;
-				return false;
-			}
-		}
-		return false;
-	}
-	
-	private boolean setupMessages() {
-	    messageWrongCommandUsage = "&6Wrong command usage!";
-	    messagePermissions = "&6You dont have permission to this command";
-	    messagePluginName = "[" + pdfFile.getName() + "]";
-	    return true;
-	}
 	
 	// onCommand
 	@Override
 	public boolean onCommand(CommandSender sender, Command c, String commandLabel, String[] args) {	    
 	    return bCommandRouter.handleCommands(sender, c, commandLabel, args);	    
+	}
+	
+	   // setup permissions
+    private boolean setupPermissions() {
+        Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
+        if (glizer.Permissions == null) {
+            if (test != null) {
+                glizer.Permissions = ((Permissions)test).getHandler();
+                log.info(messagePluginName + "Permission system found");
+                permissions = true;
+                return true;
+            }
+            else {
+                log.info(messagePluginName + "Permission system not detected, plugin disabled");
+                this.getServer().getPluginManager().disablePlugin(this);
+                permissions = false;
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    private boolean setupMessages() {
+        messageWrongCommandUsage = "&6Wrong command usage!";
+        messagePermissions = "&6You dont have permission to this command";
+        messagePluginName = "[" + pdfFile.getName() + "]";        
+        return true;
+    }
+	
+	private boolean serverlogin() {
+	    Server server = this.getServer();
+	    String serverversion = server.getVersion();
+	    String pluginversion = pdfFile.getVersion().replaceAll(".", "");
+	    boolean onlinemode = true;
+	    boolean whitelist = false;
+	    String slots = Integer.toString(server.getMaxPlayers());
+	    String servername = bConfigManager.servername;
+	    String owner = bConfigManager.owner;
+	    //String key = bConfigManager.key;
+        serverip = this.getServer().getIp() + this.getServer().getPort();
+        
+        HashMap<String, String> url_items = new HashMap<String, String>();
+        url_items.put("exec", "start");
+        url_items.put("owner", owner);
+        url_items.put("servername", servername);
+        url_items.put("serverip", serverip);
+        url_items.put("serverversion", serverversion);
+        url_items.put("pluginversion", pluginversion);
+        url_items.put("offlinemode", Boolean.toString(onlinemode));
+        url_items.put("whitelist", Boolean.toString(whitelist));
+        url_items.put("slots", slots);
+        
+        JSONObject result = bConnector.hdl_com(url_items);
+        if(result.toString() == "ok") {
+            bChat.log("&6 Connected to glizer-server.");
+            return true;
+        }
+        else {
+            bChat.log("&6 Cant establish a connection to glizer-server!", 2);
+            offline = true;
+            return false;
+        }
 	}
 }

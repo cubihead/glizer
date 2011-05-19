@@ -126,9 +126,27 @@ public class bChat {
         return newmessage;
     }
     
+    public static void log(String message, int type) {
+        switch(type) {
+            case 1:
+                log.info(message);
+            case 2:
+                log.warning(message);
+            case 3:
+                log.severe(message);
+            default:
+                log.info(message);
+        }
+    }
+    
+    public static void log(String message) {
+        log.info(message);
+    }
+    
     public static void broadcastMessage(String message) {
         message = bChat.replaceColorCodes(message);
         server.broadcastMessage(message);
+        log.info(message);
     }
     
     public static void sendMessageToPlayer(Player player, String message) {
