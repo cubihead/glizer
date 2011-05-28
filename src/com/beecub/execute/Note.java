@@ -17,7 +17,7 @@ public class Note {
                     message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    if(Ban.addNote(player, recipient, "0", "1", "0", message, "0", "0")) {
+                    if(Ban.addNote(player, recipient, "0", "1", "0", message, "0", "0", "0")) {
                         bChat.sendMessageToPlayer(player, "&6Note added");
                         return true;
                     }

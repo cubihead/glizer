@@ -66,7 +66,7 @@ public class glizerPlayerListener extends PlayerListener {
             }
         }
         catch(Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         if(bBackupManager.checkBanWhiteList(player.getName())) {
             kick = false;

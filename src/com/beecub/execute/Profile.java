@@ -20,14 +20,15 @@ public class Profile {
             return true;
         }
         bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/profile&e [playername]");
+        bChat.sendMessageToPlayer(player, "&6/profile&e [field] [value]");
         return true;
     }
     
     public static boolean editprofile(String command, Player player, String[] args) {
-        if(args.length == 1) {
-            String recipient = args[0];
-            editProfile(player, recipient);
+        if(args.length == 2) {
+            String field = args[0];
+            String value = args[1];
+            editProfile(player, field, value);
             return true;
         }
         bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
@@ -40,7 +41,7 @@ public class Profile {
         return true;
     }
     
-    public static String editProfile(Player player, String recipient) {
+    public static String editProfile(Player player, String field, String value) {
         
         String ip = bConnector.getPlayerIPAddress(player);
         
@@ -49,13 +50,9 @@ public class Profile {
         url_items.put("do", "edit");
         url_items.put("account", player.getName());
         url_items.put("ip", ip);
-        url_items.put("lastip", ip);
-        url_items.put("name", "beecub");
-        url_items.put("realname", "beecub");
-        url_items.put("email", "noreply@beecub.com");
-        url_items.put("age", "21");
-        url_items.put("status", "developing glizer");
-        url_items.put("mehr", "");
+        url_items.put("name", player.getName());
+        url_items.put("field", field);
+        url_items.put("value", value);
         
         JSONObject result = bConnector.hdl_com(url_items);
         bChat.log(result.toString());

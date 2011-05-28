@@ -32,11 +32,11 @@ public class bTimer extends TimerTask {
         url_items.put("exec", "heartbeat");
         url_items.put("ip", "1.1.1.1");
         url_items.put("account", "server");
-                
+        
         String users = "";
         //Player [] players = glizer.getServer().getOnlinePlayers();
         for(Player player : players) {
-            users = player.getName() + ",";
+            users += player.getName() + ",";
             url_items.put("ip_" + player.getName(), bConnector.getPlayerIPAddress(player));
         }
         if(players.length > 0) users = users.substring(0, users.length() - 1);

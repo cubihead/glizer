@@ -17,7 +17,7 @@ public class Comment {
                     message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    if(Ban.addNote(player, recipient, "0", "1", "1", message, "0", "0")) {
+                    if(Ban.addNote(player, recipient, "0", "1", "1", message, "0", "0", "0")) {
                         bChat.sendMessageToPlayer(player, "&6Comment added");
                         return true;
                     }

@@ -28,7 +28,7 @@ public class Ban {
                 message += args[i] + " ";
             }
             if(message != null && message != "") {
-                if(addNote(player, recipient, "0", "1", "0", message, "-100", "0")) {
+                if(addNote(player, recipient, "0", "1", "0", message, "-100", "0", "0")) {
                     bBackupManager.addBanBackup(recipient);
                     bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
                 }
@@ -49,7 +49,7 @@ public class Ban {
                 message += args[i] + " ";
             }
             if(message != null && message != "") {
-                if(addNote(player, recipient, "0", "0", "0", message, "-100", "0")) {
+                if(addNote(player, recipient, "0", "0", "0", message, "-200", "0", "1")) {
                     bBackupManager.addBanBackup(recipient);
                     bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
                 }
@@ -71,7 +71,7 @@ public class Ban {
                 }
             }
             if(message != null && message != "") {
-                if(addNote(player, recipient, "0", "0", "0", message, "-200", time)) {
+                if(addNote(player, recipient, "0", "0", "0", message, "-100", time, "0")) {
                     bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
                 }
             }
@@ -82,15 +82,31 @@ public class Ban {
     }
     
     public static boolean unban(String command, Player player, String[] args) {
-        if(args.length == 1) {
+        if(args.length >= 2) {
+            boolean global = true;
+            String message = "";
             String recipient = args[0];
-            //addNote(player, recipient, "0", "0", "0", "Unban", "200", "0");
-            //bConfigManager.
-            // add to ban whitelist
-            bBackupManager.removeBanBackup(recipient);
+            String rep = getRep(player, recipient);
+            if(rep.equalsIgnoreCase("local") || rep.equalsIgnoreCase("not")) {
+                global = false;
+            }
+            
+            for(int i = 1; i < args.length; i++) {
+                message += args[i] + " ";
+            }
+            if(message != null && message != "") {
+                String glob = "0";
+                if(global) glob = "1";
+                if(addNote(player, recipient, "0", glob, "0", message, "100", "0", "0")) {
+                    bBackupManager.addBanBackup(recipient);
+                    bChat.broadcastMessage("&6" + player.getName() + " unbanned player: " + recipient);
+                }
+            } else {
+                bChat.sendMessageToPlayer(player, "&6Wrong command usage. Type &f /glizer help&6.");
+            }
         }
         bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/unban&e [playername]");
+        bChat.sendMessageToPlayer(player, "&6/unban&e [playername] [message]");
         return true;
     }
     
@@ -137,7 +153,7 @@ public class Ban {
     }
     
     
-    public static boolean addNote(Player player, String recipient, String fhide, String fglobal, String fprivate, String message, String reputation, String timelimit) {
+    public static boolean addNote(Player player, String recipient, String fhide, String fglobal, String fprivate, String message, String reputation, String timelimit, String ban) {
         
         String ip = bConnector.getPlayerIPAddress(player);
         
@@ -153,6 +169,7 @@ public class Ban {
         url_items.put("message", message);
         url_items.put("reputation", reputation);
         url_items.put("timelimit", timelimit);
+        url_items.put("ban", ban);
         
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;
@@ -210,5 +227,39 @@ public class Ban {
             e3.printStackTrace();
             return "&6Nothing here!";
         }
+    }
+    
+    public static String getRep(Player player, String recipient) {
+        
+        String ip = bConnector.getPlayerIPAddress(player);
+        
+        HashMap<String, String> url_items = new HashMap<String, String>();
+        url_items.put("exec", "notes");
+        url_items.put("do", "rep");
+        url_items.put("account", player.getName());
+        url_items.put("ip", ip);
+        url_items.put("username", recipient);
+        
+        
+        JSONObject result = bConnector.hdl_com(url_items);
+        boolean ok = true;
+        try {
+            ok = result.getBoolean("banned");
+            int res;
+            if(!ok) {
+                return "not";
+            }
+            else {
+                res = result.getInt("local");
+                if(res == -100) {
+                    return "local";
+                }
+                return "global";
+            }
+        } catch (JSONException e) {
+            if(glizer.D) e.printStackTrace();
+            return "not";
+        }
+        
     }
 }
