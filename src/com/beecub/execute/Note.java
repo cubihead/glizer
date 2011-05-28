@@ -44,8 +44,9 @@ public class Note {
                         return false;
                     }
                 }
-                String result = Ban.getNote(player, args[0], "admin", "2", String.valueOf(page), "5");
-                bChat.sendMessageToPlayer(player, result);
+                bChat.sendMessageToPlayer(player, "&6 --- Notes --- ");
+                /*String result = */Ban.getNote(player, args[0], "admin", "2", String.valueOf(page), "5");
+                //bChat.sendMessageToPlayer(player, result);
                 return true;
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);

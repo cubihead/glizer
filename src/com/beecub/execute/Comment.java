@@ -44,8 +44,9 @@ public class Comment {
                         return false;
                     }
                 }
-                String result = Ban.getNote(player, args[0], "u2u", "2", String.valueOf(page), "5");
-                bChat.sendMessageToPlayer(player, result);
+                bChat.sendMessageToPlayer(player, "&6 --- Comments --- ");
+                /*String result = */Ban.getNote(player, args[0], "u2u", "2", String.valueOf(page), "5");
+                //bChat.sendMessageToPlayer(player, result);
                 return true;
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);

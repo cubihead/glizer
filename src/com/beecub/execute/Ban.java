@@ -190,16 +190,18 @@ public class Ban {
         
         try {
             int length = result.getInt("_size");
-            String friends = "&6Your Notes: &e";
+            //String friends = "&6Your Notes: &e";
             for(int i = 0; i < length; i++) {
                 JSONObject result2 = result.getJSONObject(String.valueOf(i));
                 String note = result2.getString("message");
                 if(!note.equalsIgnoreCase("")) {
-                    friends += result2.getString("message") + ", ";
+                    //friends += result2.getString("message") + ", ";
+                    bChat.sendMessageToPlayer(player, "&6" + result2.getString("message"));
                 }
             }
-            friends = friends.substring(0,  friends.length() - 2);
-            return friends;
+            //friends = friends.substring(0,  friends.length() - 2);
+            //return friends;
+            return "Ok";
         } catch (JSONException e3) {
             e3.printStackTrace();
             return "&6Nothing here!";
