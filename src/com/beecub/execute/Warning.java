@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
+import com.beecub.util.bMessageManager;
 import com.beecub.util.bPermissions;
 
 public class Warning {
@@ -24,7 +25,7 @@ public class Warning {
                     return true;
                 }
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;
@@ -36,7 +37,7 @@ public class Warning {
                 // get warnings from krim
                 return true;
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;

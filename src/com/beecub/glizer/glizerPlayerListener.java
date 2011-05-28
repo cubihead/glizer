@@ -24,7 +24,7 @@ public class glizerPlayerListener extends PlayerListener {
 
 	}
 	
-	public void onPlayerJoin(PlayerJoinEvent event) {
+	public void onPlayerJoin(PlayerJoinEvent event) {	    
 	    Player player = event.getPlayer();
         String ip = bConnector.getPlayerIPAddress(player);
         
@@ -36,13 +36,14 @@ public class glizerPlayerListener extends PlayerListener {
         url_items.put("userip", ip);
         
         JSONObject result = bConnector.hdl_com(url_items);
-        bChat.log(result.toString());
         if(result.toString() == "ok") {
-            bChat.log("&6 Connected to glizer-server.");
+            if(glizer.D) bChat.log("[glizer] Player " + player.getName() + " logged into glizer.");
         }
         else {
-            bChat.log("&6 Cant establish a connection to glizer-server!", 2);
+            if(glizer.D) bChat.log("[glizer] Player " + player.getName() + " cant be connected into glizer.", 2);
         }
+        
+        bChat.sendMessageToPlayer(player, "&2glizer &6is running on this server.");
 	}
 }
 

@@ -12,6 +12,7 @@ import com.beecub.execute.Other;
 import com.beecub.execute.Profile;
 import com.beecub.execute.Rating;
 import com.beecub.execute.Warning;
+import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
 
 
@@ -20,7 +21,7 @@ public class bCommandRouter {
     public static boolean handleCommands(CommandSender sender, Command c, String commandLabel, String[] args) {
         
         String command = c.getName().toLowerCase();
-        //glizer.log.info("command: " + command);
+        if(glizer.D) bChat.log("[glizer] Command: " + command);
         
         if(sender instanceof Player) {
             Player player = (Player) sender;

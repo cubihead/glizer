@@ -1,6 +1,5 @@
 package com.beecub.execute;
 
-import java.net.InetSocketAddress;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
@@ -10,6 +9,7 @@ import com.beecub.glizer.glizer;
 import com.beecub.util.bBackupManager;
 import com.beecub.util.bChat;
 import com.beecub.util.bConnector;
+import com.beecub.util.bMessageManager;
 import com.beecub.util.bPermissions;
 
 public class Ban {
@@ -27,7 +27,7 @@ public class Ban {
                 message += args[i] + " ";
             }
             if(message != null && message != "") {
-                connectServer(player, recipient, "0", "1", "0", message, "-100", "0");
+                addNoteAction(player, recipient, "0", "1", "0", message, "-100", "0");
                 bBackupManager.addBanBackup(recipient);
             } else {
                 bChat.sendMessageToPlayer(player, "&6Wrong command usage. Type &f /glizer help&6.");
@@ -44,7 +44,7 @@ public class Ban {
                 message += args[i] + " ";
             }
             if(message != null && message != "") {
-                connectServer(player, recipient, "0", "0", "0", message, "-100", "0");
+                addNoteAction(player, recipient, "0", "0", "0", message, "-100", "0");
                 bBackupManager.addBanBackup(recipient);
             }
         }
@@ -62,7 +62,7 @@ public class Ban {
                 }
             }
             if(message != null && message != "") {
-                connectServer(player, recipient, "0", "0", "0", message, "-100", time);
+                addNoteAction(player, recipient, "0", "0", "0", message, "-100", time);
             }
         }
         return true;
@@ -71,8 +71,8 @@ public class Ban {
     public static boolean unban(String command, Player player, String[] args) {
         if(args.length == 1) {
             String recipient = args[0];
-            connectServer(player, recipient, "0", "0", "0", "", "100", "0");
-            bBackupManager.addBanBackup(recipient);
+            addNoteAction(player, recipient, "0", "0", "0", "", "100", "0");
+            bBackupManager.removeBanBackup(recipient);
         }
         return true;
     }
@@ -83,15 +83,15 @@ public class Ban {
             if(args.length == 1) {
                 String name = args[0];
                 if(bBackupManager.addbanwhitelist(name)) {
-                    bChat.sendMessageToPlayer(player, "Completed.");
+                    bChat.sendMessageToPlayer(player, "&6Completed.");
                     return true;
                 }
                 else {
-                    bChat.sendMessageToPlayer(player, "Requested player is already on ban whitelist.");
+                    bChat.sendMessageToPlayer(player, "&6Requested player is already on ban whitelist.");
                     return true;
                 }
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;
@@ -111,14 +111,14 @@ public class Ban {
                     return true;
                 }
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;
     }
     
     
-    private static boolean connectServer(Player player, String recipient, String fhide, String fglobal, String fprivate, String message, String reputation, String timelimit) {
+    private static boolean addNoteAction(Player player, String recipient, String fhide, String fglobal, String fprivate, String message, String reputation, String timelimit) {
         
         // 'username','fhide','fglobal','fprivate','message','reputation','timelimit'
         
@@ -138,13 +138,12 @@ public class Ban {
         url_items.put("timelimit", timelimit);
         
         JSONObject result = bConnector.hdl_com(url_items);
-        bChat.log(result.toString());
         if(result.toString() == "ok") {
-            bChat.log("&6 Connected to glizer-server.");
+            if(glizer.D) bChat.log("[glizer] Note action done.");
             return true;
         }
         else {
-            bChat.log("&6 Cant establish a connection to glizer-server!", 2);
+            if(glizer.D) bChat.log("[glizer] Note action cant be done", 2);
             return false;
         }
     }

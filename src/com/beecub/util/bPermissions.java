@@ -211,10 +211,10 @@ public class bPermissions {
             }
         }
         else {
-            bChat.sendMessageToPlayer(player, glizer.messagePermissions);
+            bChat.sendMessageToPlayer(player, bMessageManager.messagePermissions);
             return false;
         }
-        bChat.sendMessageToPlayer(player, glizer.messagePermissions);
+        bChat.sendMessageToPlayer(player, bMessageManager.messagePermissions);
         return false;
     }
 }

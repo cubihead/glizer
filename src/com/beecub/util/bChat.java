@@ -130,12 +130,16 @@ public class bChat {
         switch(type) {
             case 1:
                 log.info(message);
+                break;
             case 2:
                 log.warning(message);
+                break;
             case 3:
                 log.severe(message);
+                break;
             default:
                 log.info(message);
+                break;
         }
     }
     

@@ -6,13 +6,17 @@ import org.bukkit.util.config.Configuration;
 
 import com.beecub.glizer.glizer;
 
-public class bTextManager {
+public class bMessageManager {
 
     protected static glizer plugin;
     protected static Configuration conf;
     
+    /* Messages */
+    public static String messageWrongCommandUsage = "&6Wrong command usage!";
+    public static String messagePermissions = "&6You dont have permissions to this command!";
     
-    public bTextManager(glizer glizer) {
+    
+    public bMessageManager(glizer glizer) {
         plugin = glizer;
         setupconf();
         load();

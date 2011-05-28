@@ -15,32 +15,38 @@ public class bTimer extends TimerTask {
     public bTimer(glizer glizer, Timer timer){
         this.glizer = glizer;
     }
-    public bTimer() {
-    }
     
     public void run() {
-        heartbeat();
+        Player [] players = glizer.getServer().getOnlinePlayers();
+        heartbeat(players);
         Timer scheduler = new Timer();
         bTimer scheduleMe = new bTimer(glizer, scheduler);
         scheduler.schedule(scheduleMe, 5 * 60 * 1000);
     }
     
-    public void heartbeat() {
+    public void heartbeat(Player [] players) {
         
-        HashMap<String, String> url_items = new HashMap<String, String>();
+        HashMap<String, String> url_items = new HashMap<String, String>();        
         url_items.put("exec", "heartbeat");
         url_items.put("ip", "1.1.1.1");
         url_items.put("account", "server");
-        url_items.put("users", "beecub,user2,user3"); 
-        url_items.put("ip_beecub", "10.20.30.40");
+        
+        
+        String users = "";
+        //Player [] players = glizer.getServer().getOnlinePlayers();
+        for(Player player : players) {
+            users = player.getName() + ",";
+            url_items.put("ip_" + player.getName(), bConnector.getPlayerIPAddress(player));
+        }
+        users.substring(1, users.length() - 1);
+        url_items.put("users", users);        
         
         JSONObject result = bConnector.hdl_com(url_items);
-        bChat.log(result.toString());
         if(result.toString() == "ok") {
-            bChat.log("&6 Connected to glizer-server.");
+            bChat.log("[glizer] Heartbeat.");
         }
         else {
-            bChat.log("&6 Cant establish a connection to glizer-server!", 2);
+            bChat.log("[glizer] Heartbeat failed.", 2);
         }
     }
 }

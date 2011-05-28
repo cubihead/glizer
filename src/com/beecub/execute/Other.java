@@ -12,6 +12,7 @@ import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
 import com.beecub.util.bConnector;
+import com.beecub.util.bMessageManager;
 import com.beecub.util.bPermissions;
 
 
@@ -41,7 +42,7 @@ public class Other {
                     return true;
                 }
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;
@@ -90,7 +91,7 @@ public class Other {
             if(args.length <= 1) {
                 bConfigManager.reload();
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;
@@ -115,7 +116,7 @@ public class Other {
             else if(args.length == 0) {
                 showHelpPage(player, 0);
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;

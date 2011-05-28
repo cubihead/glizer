@@ -23,7 +23,7 @@ import com.beecub.command.bCommandRouter;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
 import com.beecub.util.bConnector;
-import com.beecub.util.bTextManager;
+import com.beecub.util.bMessageManager;
 import com.beecub.util.bTimer;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -35,8 +35,6 @@ public class glizer extends JavaPlugin {
 	public static PluginDescriptionFile pdfFile;
 	public static PermissionHandler Permissions;
 	public static boolean permissions = false;
-	public static String messageWrongCommandUsage;
-	public static String messagePermissions;
 	public static String messagePluginName;
 	public static boolean onlinemode = false;
 	public static String serverip;
@@ -45,7 +43,7 @@ public class glizer extends JavaPlugin {
 	public static boolean D;
 	
 	@SuppressWarnings({ "unused", "static-access" })
-	public void onEnable() {
+    public void onEnable() {
 
 		pdfFile = this.getDescription();
 		PluginManager pm = getServer().getPluginManager();
@@ -53,7 +51,7 @@ public class glizer extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Normal, this);
 	    
 		bConfigManager bConfigManager = new bConfigManager(this);
-		bTextManager bTextManager = new bTextManager(this);
+		bMessageManager bTextManager = new bMessageManager(this);
 		bChat bChat = new bChat(this.getServer());
 		
 		serverport = this.getServer().getIp() + this.getServer().getPort();
@@ -67,7 +65,7 @@ public class glizer extends JavaPlugin {
 		if(setupPermissions()){
 		}
 		
-		if(serverlogin()) {
+		if(serverLogin()) {
 		}
 		
 		if(heartbeat(this)) {
@@ -77,6 +75,8 @@ public class glizer extends JavaPlugin {
 		bChat.log(messagePluginName + " version " + pdfFile.getVersion() + " is enabled!" );
 	}
 	public void onDisable() {
+	    if(serverLogout()) {
+	    }
 		bChat.log(messagePluginName + " version " + pdfFile.getVersion() + " disabled!");
 	}
 	
@@ -107,21 +107,17 @@ public class glizer extends JavaPlugin {
     }
     
     private boolean setupMessages() {
-        messageWrongCommandUsage = "&6Wrong command usage!";
-        messagePermissions = "&6You dont have permission to this command";
         messagePluginName = "[" + pdfFile.getName() + "]";        
         return true;
     }
 	
-	private boolean serverlogin() {
+	private boolean serverLogin() {
 	    Server server = this.getServer();
 	    String serverversion = server.getVersion();
 	    String pluginversion = pdfFile.getVersion().replaceAll("\\.", "");
-	    boolean whitelist = false;
 	    String slots = Integer.toString(server.getMaxPlayers());
 	    String servername = bConfigManager.servername;
-	    String owner = bConfigManager.owner;
-	    //String key = bConfigManager.key;        
+	    String owner = bConfigManager.owner;      
         
         HashMap<String, String> url_items = new HashMap<String, String>();
         url_items.put("exec", "start");
@@ -133,36 +129,70 @@ public class glizer extends JavaPlugin {
         url_items.put("version", pluginversion);
         url_items.put("bukkit", serverversion);
         url_items.put("slots", slots);
-        if(whitelist = false) url_items.put("whitelist", "0");
+        if(checkWhiteList() == false) url_items.put("whitelist", "0");
         else url_items.put("whitelist", "1");
-        //url_items.put("whitelist", Boolean.toString(whitelist));
-        if(onlinemode = false) url_items.put("offlinemode", "0");
+        if(onlinemode == false) url_items.put("offlinemode", "0");
         else url_items.put("offlinemode", "1");
         url_items.put("banborder", bConfigManager.banborder);
         url_items.put("owner", owner);
         
         JSONObject result = bConnector.hdl_com(url_items);
+        String ok;
         try {
-            if(result.getString("response") == "ok") {
-                bChat.log("&6 Connected to glizer-server.");
-                return true;
-            }
-            else {
-                bChat.log("&6 Failure! Wrong server configuration data sent.", 2);
-                offline = true;
-                return false;
-            }
+            ok = result.getString("response");
         } catch (JSONException e) {
-            e.printStackTrace();
+            if(glizer.D) e.printStackTrace();
             bChat.log("&6 Cant establish a connection to glizer-server! glizer is now in offline mode.", 2);
+            offline = true;
+            return false;
+        } 
+        bChat.log(":::" + ok + ":::");
+        if(ok.equalsIgnoreCase("ok")) {
+            bChat.log("Connected to glizer-server.");
+            return true;
+        }
+        else {
+            bChat.log("Failure! Wrong server configuration data sent.", 2);
+            offline = true;
             return false;
         }
 	}
 	
+   @SuppressWarnings("unused")
+   private boolean serverLogout() {
+        Server server = this.getServer();     
+        
+        HashMap<String, String> url_items = new HashMap<String, String>();
+        url_items.put("exec", "stop");
+        url_items.put("account", "server");
+        url_items.put("ip", "1.1.1.1");
+        
+        JSONObject result = bConnector.hdl_com(url_items);
+        return true;
+        /*String ok;
+        try {
+            ok = result.getString("response");
+        } catch (JSONException e) {
+            if(glizer.D) e.printStackTrace();
+            bChat.log("&6 Cant establish a connection to glizer-server! glizer is now in offline mode.", 2);
+            offline = true;
+            return false;
+        } 
+        bChat.log(":::" + ok + ":::");
+        if(ok.equalsIgnoreCase("ok")) {
+            bChat.log("Connected to glizer-server.");
+            return true;
+        }
+        else {
+            bChat.log("Failure! Wrong server configuration data sent.", 2);
+            offline = true;
+            return false;
+        }*/
+    }
+	
     private boolean checkOnlineMode() {
         Properties prop = new Properties();
         String f = "server.properties";
-        log.info(f);
         try{
             FileInputStream in = new FileInputStream(new File(f));
             prop.load(in);
@@ -171,22 +201,39 @@ public class glizer extends JavaPlugin {
                 onlinemode = true;
                 return true;
             } else {
-                bChat.log(messagePluginName + " Online-mode false!", 2);
+                bChat.log(messagePluginName + " Online-mode false! glizer disabled.", 2);
                 this.getServer().getPluginManager().disablePlugin(this);
                 return false;
             }
         } catch(IOException e) {
-            this.getServer().getPluginManager().disablePlugin(this);
-            e.printStackTrace();
-            bChat.log(messagePluginName + " Online-mode false!", 2);
+            if(glizer.D) e.printStackTrace();
+            bChat.log(messagePluginName + " Online-mode false! glizer disabled.", 2);
             this.getServer().getPluginManager().disablePlugin(this);
             return false;
         }
     }
     
+    private boolean checkWhiteList() {
+        Properties prop = new Properties();
+        String f = "server.properties";
+        try{
+            FileInputStream in = new FileInputStream(new File(f));
+            prop.load(in);
+            String work = prop.getProperty("white-list");
+            if(work.equalsIgnoreCase("true")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(IOException e) {
+            if(glizer.D) e.printStackTrace();
+            return true;
+        } 
+    }
+    
     public static boolean heartbeat(glizer glizer) {
         Timer scheduler = new Timer();
-        bTimer scheduleMe = new bTimer();
+        bTimer scheduleMe = new bTimer(glizer, scheduler);
         scheduler.schedule(scheduleMe, 5 * 60 * 1000);
         return true;
     }

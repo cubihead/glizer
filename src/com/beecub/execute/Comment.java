@@ -2,9 +2,8 @@ package com.beecub.execute;
 
 import org.bukkit.entity.Player;
 
-
-import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
+import com.beecub.util.bMessageManager;
 import com.beecub.util.bPermissions;
 
 public class Comment {
@@ -23,7 +22,7 @@ public class Comment {
                     return true;
                 }
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;
@@ -35,7 +34,7 @@ public class Comment {
                 // get comments from krim
                 return true;
             }
-            bChat.sendMessageToPlayer(player, glizer.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
         }
         return true;
