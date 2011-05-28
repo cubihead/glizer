@@ -16,38 +16,50 @@ import com.beecub.util.bPermissions;
 public class Rating {
 
     public static boolean rateplayer(String command, Player player, String[] args) {
-        if(bPermissions.checkPermission(player, command)) {
-            if(args.length == 2) {
-                //String recipient = args[0];
-                int rating = Integer.valueOf(args[1]);
-                if(rating >= 0) {
-                    if(rating <= 10) {
-                        // send player rating to krim
-                        bChat.sendMessageToPlayer(player, "Not possible in this version of glizer");
-                        return true;
-                    }
-                }
-            }
-            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-            return true;
-        }
+//        if(bPermissions.checkPermission(player, command)) {
+//            if(args.length == 2) {
+//                //String recipient = args[0];
+//                int rating = Integer.valueOf(args[1]);
+//                if(rating >= 0) {
+//                    if(rating <= 10) {
+//                        // send player rating to krim
+//                        
+//                        return true;
+//                    }
+//                }
+//            }
+//            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+//            return true;
+//        }
+        bChat.sendMessageToPlayer(player, "&6Not available in this version of glizer");
         return true;
     }
     
     public static boolean rateserver(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
-                int rating = Integer.valueOf(args[0]);
-                if(rating >= 0) {
-                    if(rating <= 10) {
-                        if(rateServer(player, String.valueOf(rating))) {
-                            bChat.sendMessageToPlayer(player, "Success");
+                try {
+                    int rating = Integer.valueOf(args[0]);
+                    if(rating >= 0) {
+                        if(rating <= 10) {
+                            if(rateServer(player, String.valueOf(rating))) {
+                                bChat.sendMessageToPlayer(player, "Success");
+                                return true;
+                            }
+                            bChat.sendMessageToPlayer(player, "&6Server error");
                             return true;
                         }
                     }
+                    bChat.sendMessageToPlayer(player, "&6Rating has to be between &e0&6 and &e10&6");
+                    return true;
+                }
+                catch(Exception e) {
+                    bChat.sendMessageToPlayer(player, "&6This is not a Integer value: &e" + args[0]);
+                    return true;
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/rateserver &e[value]");
             return true;
         }
         return true;
@@ -67,7 +79,7 @@ public class Rating {
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;
         try {
-            ok = result.getString("result");
+            ok = result.getString("response");
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
             return false;

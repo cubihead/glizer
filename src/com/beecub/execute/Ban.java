@@ -49,8 +49,10 @@ public class Ban {
                 message += args[i] + " ";
             }
             if(message != null && message != "") {
-                addNote(player, recipient, "0", "0", "0", message, "-100", "0");
-                bBackupManager.addBanBackup(recipient);
+                if(addNote(player, recipient, "0", "0", "0", message, "-100", "0")) {
+                    bBackupManager.addBanBackup(recipient);
+                    bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
+                }
             }
         }
         bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
@@ -69,7 +71,9 @@ public class Ban {
                 }
             }
             if(message != null && message != "") {
-                addNote(player, recipient, "0", "0", "0", message, "-100", time);
+                if(addNote(player, recipient, "0", "0", "0", message, "-200", time)) {
+                    bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
+                }
             }
         }
         bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
@@ -96,11 +100,11 @@ public class Ban {
             if(args.length == 1) {
                 String name = args[0];
                 if(bBackupManager.addBanWhiteList(name)) {
-                    bChat.sendMessageToPlayer(player, "&6Completed.");
+                    bChat.sendMessageToPlayer(player, "&6Completed");
                     return true;
                 }
                 else {
-                    bChat.sendMessageToPlayer(player, "&6Requested player is already on ban whitelist.");
+                    bChat.sendMessageToPlayer(player, "&6Requested player is already on ban whitelist");
                     return true;
                 }
             }
@@ -117,11 +121,11 @@ public class Ban {
             if(args.length == 1) {
                 String name = args[0];
                 if(bBackupManager.removeBanWhiteList(name)) {
-                    bChat.sendMessageToPlayer(player, "Completed.");
+                    bChat.sendMessageToPlayer(player, "&6Completed");
                     return true;
                 }
                 else {
-                    bChat.sendMessageToPlayer(player, "Requested player is not on ban whitelist!");
+                    bChat.sendMessageToPlayer(player, "&6Requested player is not on ban whitelist");
                     return true;
                 }
             }

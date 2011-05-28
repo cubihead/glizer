@@ -94,7 +94,7 @@ public class Profile {
             bChat.sendMessageToPlayer(player, "&6Name: &e" + result.getString("name"));
             bChat.sendMessageToPlayer(player, "&6Realname: &e" + result.getString("realname"));
             bChat.sendMessageToPlayer(player, "&6Age: &e" + result.getString("age"));
-            bChat.sendMessageToPlayer(player, "&6Last Server: &e" + result.getString("lastserver"));
+            bChat.sendMessageToPlayer(player, "&6Last Server: &e" + result.getString("lastserverurl") + ":" + result.getString("lastserverport"));
             bChat.sendMessageToPlayer(player, "&6Status: &e" + result.getString("status"));
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
