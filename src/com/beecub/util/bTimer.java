@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.bukkit.entity.Player;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.beecub.glizer.glizer;
@@ -24,6 +25,7 @@ public class bTimer extends TimerTask {
         scheduler.schedule(scheduleMe, 5 * 60 * 1000);
     }
     
+    @SuppressWarnings("static-access")
     public void heartbeat(Player [] players) {
         
         HashMap<String, String> url_items = new HashMap<String, String>();        
@@ -42,7 +44,14 @@ public class bTimer extends TimerTask {
         url_items.put("users", users);        
         
         JSONObject result = bConnector.hdl_com(url_items);
-        if(result.toString() == "ok") {
+        String ok = null;
+        try {
+            ok = result.getString("response");
+        } catch (JSONException e) {
+            if(glizer.D) e.printStackTrace();
+            bChat.log("Unable to do heartbeat!", 2);
+        }
+        if(ok.equalsIgnoreCase("ok")) {
             bChat.log("[glizer] Heartbeat.");
         }
         else {

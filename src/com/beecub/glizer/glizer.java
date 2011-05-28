@@ -137,7 +137,7 @@ public class glizer extends JavaPlugin {
         url_items.put("owner", owner);
         
         JSONObject result = bConnector.hdl_com(url_items);
-        String ok;
+        String ok = null;
         try {
             ok = result.getString("response");
         } catch (JSONException e) {
@@ -146,7 +146,6 @@ public class glizer extends JavaPlugin {
             offline = true;
             return false;
         } 
-        bChat.log(":::" + ok + ":::");
         if(ok.equalsIgnoreCase("ok")) {
             bChat.log("Connected to glizer-server.");
             return true;

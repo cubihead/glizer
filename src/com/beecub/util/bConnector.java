@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -37,8 +36,8 @@ public class bConnector {
             for (Map.Entry entry : items.entrySet()) {
                 String key = (String)entry.getKey();
                 String val = (String)entry.getValue();
-                if(glizer.D) glizer.log.info(" ++++ KEY ++++ " + key);
-                if(glizer.D) glizer.log.info(" ++++ VAL ++++ " + val);
+                //if(glizer.D) glizer.log.info(" ++++ KEY ++++ " + key);
+                //if(glizer.D) glizer.log.info(" ++++ VAL ++++ " + val);
                 if (data.equals(""))
                     data = URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(val, "UTF-8");
                 else

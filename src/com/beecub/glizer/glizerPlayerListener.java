@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.beecub.util.bChat;
@@ -36,11 +37,18 @@ public class glizerPlayerListener extends PlayerListener {
         url_items.put("userip", ip);
         
         JSONObject result = bConnector.hdl_com(url_items);
-        if(result.toString() == "ok") {
-            if(glizer.D) bChat.log("[glizer] Player " + player.getName() + " logged into glizer.");
+        String ok = null;
+        try {
+            ok = result.getString("response");
+        } catch (JSONException e) {
+            if(glizer.D) e.printStackTrace();
+            bChat.log("Unable to check player!", 2);
+        }
+        if(ok.equalsIgnoreCase("ok")) {
+            if(glizer.D) bChat.log("Player " + player.getName() + " logged into glizer.");
         }
         else {
-            if(glizer.D) bChat.log("[glizer] Player " + player.getName() + " cant be connected into glizer.", 2);
+            if(glizer.D) bChat.log("Player " + player.getName() + " cant be connected into glizer.", 2);
         }
         
         bChat.sendMessageToPlayer(player, "&2glizer &6is running on this server.");

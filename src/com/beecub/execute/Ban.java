@@ -118,7 +118,7 @@ public class Ban {
     }
     
     
-    private static boolean addNoteAction(Player player, String recipient, String fhide, String fglobal, String fprivate, String message, String reputation, String timelimit) {
+    public static boolean addNoteAction(Player player, String recipient, String fhide, String fglobal, String fprivate, String message, String reputation, String timelimit) {
         
         // 'username','fhide','fglobal','fprivate','message','reputation','timelimit'
         
