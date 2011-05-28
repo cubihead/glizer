@@ -55,7 +55,7 @@ public class Friend {
         String ip = bConnector.getPlayerIPAddress(player);
         
         HashMap<String, String> url_items = new HashMap<String, String>();
-        url_items.put("exec", "notes");
+        url_items.put("exec", "friends");
         url_items.put("do", doAction);
         url_items.put("account", player.getName());
         url_items.put("ip", ip);
@@ -84,7 +84,7 @@ public class Friend {
         String ip = bConnector.getPlayerIPAddress(player);
         
         HashMap<String, String> url_items = new HashMap<String, String>();
-        url_items.put("exec", "notes");
+        url_items.put("exec", "friends");
         url_items.put("do", doAction);
         url_items.put("account", player.getName());
         url_items.put("ip", ip);

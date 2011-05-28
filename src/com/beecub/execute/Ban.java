@@ -145,11 +145,11 @@ public class Ban {
             return false;
         }
         if(ok.equalsIgnoreCase("ok")) {
-            if(glizer.D) bChat.log("[glizer] Note action done.");
+            if(glizer.D) bChat.log("Note action done.");
             return true;
         }
         else {
-            if(glizer.D) bChat.log("[glizer] Note action cant be done", 2);
+            if(glizer.D) bChat.log("Note action cant be done", 2);
             return false;
         }
     }
