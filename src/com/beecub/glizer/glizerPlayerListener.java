@@ -25,9 +25,10 @@ public class glizerPlayerListener extends PlayerListener {
 
 	}
 	
-	public void onPlayerJoin(PlayerJoinEvent event) {
+	@SuppressWarnings("unused")
+    public void onPlayerJoin(PlayerJoinEvent event) {
 	    Player player = event.getPlayer();
-	    if(player.getName().equalsIgnoreCase("beecub") || player.getName().equalsIgnoreCase("wmchris")) {
+	    if(/*player.getName().equalsIgnoreCase("beecub") || player.getName().equalsIgnoreCase("wmchris")*/ false) {
 	        bChat.broadcastMessage("&2" + player.getName() + "&6 is a glizer developer!");
 	    }
 	    else {
@@ -41,22 +42,23 @@ public class glizerPlayerListener extends PlayerListener {
             url_items.put("userip", ip);
             
             JSONObject result = bConnector.hdl_com(url_items);
-            String ok = null;
+            boolean ok = true;
             try {
-                ok = result.getString("response");
+                ok = result.getBoolean("banned");
+                if(!ok) {
+                    if(glizer.D) bChat.log("Player " + player.getName() + " logged into glizer.");
+                }
+                else {
+                    bChat.log("Player " + player.getName() + " is banned from this server. Kick.", 2);
+                    player.kickPlayer("You are banned from this server. Check glizer.net");
+                }
             } catch (JSONException e) {
                 if(glizer.D) e.printStackTrace();
-                bChat.log("Unable to check player!", 2);
-            }
-            if(ok.equalsIgnoreCase("ok")) {
-                if(glizer.D) bChat.log("Player " + player.getName() + " logged into glizer.");
-            }
-            else {
-                if(glizer.D) bChat.log("Player " + player.getName() + " cant be connected into glizer.", 2);
+                bChat.log("Unable to check player " + player.getName() + "!", 2);
             }
 	    }
         
-        bChat.sendMessageToPlayer(player, "&2glizer &6is running on this server.");
+        bChat.sendMessageToPlayer(player, "&6This server is running &2glizer - the Minecraft Globalizer&6.");
 	}
 }
 
