@@ -17,8 +17,10 @@ public class Note {
                     message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    Ban.addNote(player, recipient, "0", "1", "1", message, "0", "0");
-                    return true;
+                    if(Ban.addNote(player, recipient, "0", "1", "0", message, "0", "0")) {
+                        bChat.sendMessageToPlayer(player, "&6Note added");
+                        return true;
+                    }
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
@@ -30,7 +32,7 @@ public class Note {
     public static boolean notes(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
-                String result = Ban.getNote(player, args[0], "0", "1", "0", "", "0", "0");
+                String result = Ban.getNote(player, args[0], "admin", "2", "0", "5");
                 bChat.sendMessageToPlayer(player, result);
                 return true;
             }
