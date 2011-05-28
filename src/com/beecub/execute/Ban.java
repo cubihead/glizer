@@ -185,7 +185,7 @@ public class Ban {
         }
         else {
             if(glizer.D) bChat.log("[glizer] Note action cant be done", 2);
-            return result.toString();
+            return "error";
         }
     }
 }
