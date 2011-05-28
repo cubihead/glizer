@@ -18,7 +18,7 @@ public class Other {
             return true;
         }
         */
-        bChat.sendMessageToPlayer(player, "Not possible in this version of glizer");
+        bChat.sendMessageToPlayer(player, "&6Not available in this version of glizer");
         return true;
     }
     
@@ -42,7 +42,7 @@ public class Other {
             return true;
         }
         */
-        bChat.sendMessageToPlayer(player, "Not possible in this version of glizer");
+        bChat.sendMessageToPlayer(player, "&6Not available in this version of glizer");
         return true;
     }
     

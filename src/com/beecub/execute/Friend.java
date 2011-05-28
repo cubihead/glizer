@@ -112,8 +112,8 @@ public class Friend {
             }
             friends = friends.substring(0,  friends.length() - 2);
             return friends;
-        } catch (JSONException e3) {
-            e3.printStackTrace();
+        } catch (JSONException e) {
+            if(glizer.D) e.printStackTrace();
             return "error";
         }
     }
