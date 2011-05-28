@@ -17,7 +17,7 @@ public class Note {
                     message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    Ban.addNote(player, recipient, "0", "1", "1", message, "-10", "0");
+                    Ban.addNote(player, recipient, "0", "1", "1", message, "0", "0");
                     return true;
                 }
             }
