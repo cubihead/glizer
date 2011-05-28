@@ -11,11 +11,14 @@ import com.beecub.util.bPermissions;
 public class Other {
     
     public static boolean register(String command, Player player, String[] args) {
+        /*
         if(args.length == 1) {
             // not yet used
             //String password = args[0];
             return true;
         }
+        */
+        bChat.sendMessageToPlayer(player, "Not possible in this version of glizer");
         return true;
     }
     
@@ -84,10 +87,6 @@ public class Other {
         bChat.sendMessageToPlayer(player, "&442");
         return true;
     }
-    
-    /*
-     * additional functions
-     */
     
     private static void showHelpPage(Player player, int page) {
         
