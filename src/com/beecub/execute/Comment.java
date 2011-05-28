@@ -17,8 +17,10 @@ public class Comment {
                     message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    Ban.addNote(player, recipient, "0", "1", "1", message, "0", "0");
-                    return true;
+                    if(Ban.addNote(player, recipient, "0", "1", "1", message, "0", "0")) {
+                        bChat.sendMessageToPlayer(player, "&6Comment added");
+                        return true;
+                    }
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
@@ -29,9 +31,20 @@ public class Comment {
     
     public static boolean comments(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
-            if(args.length == 1) {
-                //String result = Ban.getNote(player, args[0], "0", "1", "1", "", "0", "0");
-                //bChat.sendMessageToPlayer(player, result);
+            if(args.length >= 1) {
+                int page = 0;
+                if(args.length == 2) {
+                    try {
+                        page = Integer.valueOf(args[1]);
+                        page = page - 1;
+                    }
+                    catch(Exception e) {
+                        bChat.sendMessageToPlayer(player, "&6This is not a Integer value: &e" + args[1]);
+                        return false;
+                    }
+                }
+                String result = Ban.getNote(player, args[0], "u2u", "2", String.valueOf(page), "5");
+                bChat.sendMessageToPlayer(player, result);
                 return true;
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);

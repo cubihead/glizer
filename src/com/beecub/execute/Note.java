@@ -31,8 +31,19 @@ public class Note {
     
     public static boolean notes(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
-            if(args.length == 1) {
-                String result = Ban.getNote(player, args[0], "admin", "2", "0", "5");
+            if(args.length >= 1) {
+                int page = 0;
+                if(args.length == 2) {
+                    try {
+                        page = Integer.valueOf(args[1]);
+                        page = page - 1;
+                    }
+                    catch(Exception e) {
+                        bChat.sendMessageToPlayer(player, "&6This is not a Integer value: &e" + args[1]);
+                        return false;
+                    }
+                }
+                String result = Ban.getNote(player, args[0], "admin", "2", String.valueOf(page), "5");
                 bChat.sendMessageToPlayer(player, result);
                 return true;
             }

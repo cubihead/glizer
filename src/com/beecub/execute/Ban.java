@@ -159,6 +159,9 @@ public class Ban {
     }
     
     public static String getNote(Player player, String recipient, String type, String local, String start, String limit) {
+        int page = Integer.valueOf(start);
+        page = page * 5;
+        start = String.valueOf(page);
         
         String ip = bConnector.getPlayerIPAddress(player);
         
@@ -189,7 +192,7 @@ public class Ban {
             return friends;
         } catch (JSONException e3) {
             e3.printStackTrace();
-            return "error";
+            return "&6Nothing here!";
         }
     }
 }
