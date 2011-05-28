@@ -40,7 +40,7 @@ public class bTimer extends TimerTask {
             users = player.getName() + ",";
             url_items.put("ip_" + player.getName(), bConnector.getPlayerIPAddress(player));
         }
-        users.substring(1, users.length() - 1);
+        if(players.length > 0) users = users.substring(1, users.length() - 1);
         url_items.put("users", users);        
         
         JSONObject result = bConnector.hdl_com(url_items);

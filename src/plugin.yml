@@ -2,6 +2,7 @@ name: glizer
 main: com.beecub.glizer.glizer
 version: 0.0.1
 author: beecub
+website: glizer.net
 description: >
              Minecraft Globalizer
 commands:
