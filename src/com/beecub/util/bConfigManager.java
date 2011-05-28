@@ -17,7 +17,7 @@ public class bConfigManager {
     public static String servername;
     public static String owner;
     public static String globalreputation;
-    public static String minimumreputationtoconnect;
+    public static String banborder;
     
 	
     public bConfigManager(glizer glizer) {
@@ -32,7 +32,8 @@ public class bConfigManager {
     	key = conf.getString("APIkey", null);
     	servername = conf.getString("servername", null);
     	owner = conf.getString("owner", null);
-    	minimumreputationtoconnect = conf.getString("minimumreputationtoconnect", "-40");
+    	banborder = conf.getString("banborder", "-40");
+    	glizer.D = conf.getBoolean("debugmode", false);
     }
 	
 	public static void reload() {
@@ -55,7 +56,8 @@ public class bConfigManager {
             conf.setProperty("APIkey", "0");
             conf.setProperty("servername", "name");
             conf.setProperty("owner", "playername");
-            conf.setProperty("minimumreputationtoconnect", "-40");
+            conf.setProperty("banborder", "-40");
+            conf.setProperty("debugmode", false);
             conf.save();
         }
 	}

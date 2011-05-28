@@ -1,5 +1,13 @@
 package com.beecub.glizer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Properties;
+import java.util.Timer;
+import java.util.logging.Logger;
+
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -8,19 +16,17 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import com.beecub.command.bCommandRouter;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
 import com.beecub.util.bConnector;
 import com.beecub.util.bTextManager;
+import com.beecub.util.bTimer;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
-
-import java.util.HashMap;
-import java.util.logging.Logger;
 
 
 public class glizer extends JavaPlugin {
@@ -34,9 +40,11 @@ public class glizer extends JavaPlugin {
 	public static String messagePluginName;
 	public static boolean onlinemode = false;
 	public static String serverip;
+	public static String serverport;
 	public static boolean offline = true;
-
-	@SuppressWarnings("unused")
+	public static boolean D;
+	
+	@SuppressWarnings({ "unused", "static-access" })
 	public void onEnable() {
 
 		pdfFile = this.getDescription();
@@ -48,20 +56,28 @@ public class glizer extends JavaPlugin {
 		bTextManager bTextManager = new bTextManager(this);
 		bChat bChat = new bChat(this.getServer());
 		
-		if(setupPermissions()){
-		}
+		serverport = this.getServer().getIp() + this.getServer().getPort();
 		
-		if(setupMessages()) {
+        if(setupMessages()) {
+        }
+        
+        if(checkOnlineMode()) {
+        }
+		
+		if(setupPermissions()){
 		}
 		
 		if(serverlogin()) {
 		}
 		
+		if(heartbeat(this)) {
+		}
+		    
 		PluginDescriptionFile pdfFile = this.getDescription();
-		log.info(messagePluginName + " version " + pdfFile.getVersion() + " is enabled!" );
+		bChat.log(messagePluginName + " version " + pdfFile.getVersion() + " is enabled!" );
 	}
 	public void onDisable() {
-		log.info(messagePluginName + " version " + pdfFile.getVersion() + " disabled!");
+		bChat.log(messagePluginName + " version " + pdfFile.getVersion() + " disabled!");
 	}
 	
 	// onCommand
@@ -76,12 +92,12 @@ public class glizer extends JavaPlugin {
         if (glizer.Permissions == null) {
             if (test != null) {
                 glizer.Permissions = ((Permissions)test).getHandler();
-                log.info(messagePluginName + "Permission system found");
+                log.info(messagePluginName + " Permission system found");
                 permissions = true;
                 return true;
             }
             else {
-                log.info(messagePluginName + "Permission system not detected, plugin disabled");
+                log.info(messagePluginName + " Permission system not detected, plugin disabled!");
                 this.getServer().getPluginManager().disablePlugin(this);
                 permissions = false;
                 return false;
@@ -100,35 +116,78 @@ public class glizer extends JavaPlugin {
 	private boolean serverlogin() {
 	    Server server = this.getServer();
 	    String serverversion = server.getVersion();
-	    String pluginversion = pdfFile.getVersion().replaceAll(".", "");
-	    boolean onlinemode = true;
+	    String pluginversion = pdfFile.getVersion().replaceAll("\\.", "");
 	    boolean whitelist = false;
 	    String slots = Integer.toString(server.getMaxPlayers());
 	    String servername = bConfigManager.servername;
 	    String owner = bConfigManager.owner;
-	    //String key = bConfigManager.key;
-        serverip = this.getServer().getIp() + this.getServer().getPort();
+	    //String key = bConfigManager.key;        
         
         HashMap<String, String> url_items = new HashMap<String, String>();
         url_items.put("exec", "start");
-        url_items.put("owner", owner);
-        url_items.put("servername", servername);
-        url_items.put("serverip", serverip);
-        url_items.put("serverversion", serverversion);
-        url_items.put("pluginversion", pluginversion);
-        url_items.put("offlinemode", Boolean.toString(onlinemode));
-        url_items.put("whitelist", Boolean.toString(whitelist));
+        url_items.put("account", "server");
+        url_items.put("ip", "1.1.1.1");
+        url_items.put("lastip", "1.1.1.1");
+        url_items.put("port", serverport);
+        url_items.put("name", servername);
+        url_items.put("version", pluginversion);
+        url_items.put("bukkit", serverversion);
         url_items.put("slots", slots);
+        if(whitelist = false) url_items.put("whitelist", "0");
+        else url_items.put("whitelist", "1");
+        //url_items.put("whitelist", Boolean.toString(whitelist));
+        if(onlinemode = false) url_items.put("offlinemode", "0");
+        else url_items.put("offlinemode", "1");
+        url_items.put("banborder", bConfigManager.banborder);
+        url_items.put("owner", owner);
         
         JSONObject result = bConnector.hdl_com(url_items);
-        if(result.toString() == "ok") {
-            bChat.log("&6 Connected to glizer-server.");
-            return true;
-        }
-        else {
-            bChat.log("&6 Cant establish a connection to glizer-server!", 2);
-            offline = true;
+        try {
+            if(result.getString("response") == "ok") {
+                bChat.log("&6 Connected to glizer-server.");
+                return true;
+            }
+            else {
+                bChat.log("&6 Failure! Wrong server configuration data sent.", 2);
+                offline = true;
+                return false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            bChat.log("&6 Cant establish a connection to glizer-server! glizer is now in offline mode.", 2);
             return false;
         }
 	}
+	
+    private boolean checkOnlineMode() {
+        Properties prop = new Properties();
+        String f = "server.properties";
+        log.info(f);
+        try{
+            FileInputStream in = new FileInputStream(new File(f));
+            prop.load(in);
+            String work = prop.getProperty("online-mode");
+            if(work.equals("true")) {
+                onlinemode = true;
+                return true;
+            } else {
+                bChat.log(messagePluginName + " Online-mode false!", 2);
+                this.getServer().getPluginManager().disablePlugin(this);
+                return false;
+            }
+        } catch(IOException e) {
+            this.getServer().getPluginManager().disablePlugin(this);
+            e.printStackTrace();
+            bChat.log(messagePluginName + " Online-mode false!", 2);
+            this.getServer().getPluginManager().disablePlugin(this);
+            return false;
+        }
+    }
+    
+    public static boolean heartbeat(glizer glizer) {
+        Timer scheduler = new Timer();
+        bTimer scheduleMe = new bTimer();
+        scheduler.schedule(scheduleMe, 5 * 60 * 1000);
+        return true;
+    }
 }

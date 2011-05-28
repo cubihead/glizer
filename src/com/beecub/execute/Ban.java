@@ -1,15 +1,14 @@
 package com.beecub.execute;
 
+import java.net.InetSocketAddress;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
 import org.json.JSONObject;
 
-
 import com.beecub.glizer.glizer;
 import com.beecub.util.bBackupManager;
 import com.beecub.util.bChat;
-import com.beecub.util.bConfigManager;
 import com.beecub.util.bConnector;
 import com.beecub.util.bPermissions;
 
@@ -30,6 +29,8 @@ public class Ban {
             if(message != null && message != "") {
                 connectServer(player, recipient, "0", "1", "0", message, "-100", "0");
                 bBackupManager.addBanBackup(recipient);
+            } else {
+                bChat.sendMessageToPlayer(player, "&6Wrong command usage. Type &f /glizer help&6.");
             }
         }
         return true;
@@ -121,9 +122,13 @@ public class Ban {
         
         // 'username','fhide','fglobal','fprivate','message','reputation','timelimit'
         
+        String ip = bConnector.getPlayerIPAddress(player);
+        
         HashMap<String, String> url_items = new HashMap<String, String>();
-        url_items.put("exec", "start");
-        url_items.put("ip", player.getAddress().getHostName());
+        url_items.put("exec", "notes");
+        url_items.put("do", "add");
+        url_items.put("account", player.getName());
+        url_items.put("ip", ip);
         url_items.put("username", recipient);
         url_items.put("fhide", fhide);
         url_items.put("fglobal", fglobal);

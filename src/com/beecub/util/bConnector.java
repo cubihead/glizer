@@ -4,12 +4,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.entity.Player;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +37,8 @@ public class bConnector {
             for (Map.Entry entry : items.entrySet()) {
                 String key = (String)entry.getKey();
                 String val = (String)entry.getValue();
+                if(glizer.D) glizer.log.info(" ++++ KEY ++++ " + key);
+                if(glizer.D) glizer.log.info(" ++++ VAL ++++ " + val);
                 if (data.equals(""))
                     data = URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(val, "UTF-8");
                 else
@@ -69,7 +74,9 @@ public class bConnector {
             }
       
             String result = buf.toString();
-            glizer.log.info(result);
+            
+            // DEBUG
+            if(glizer.D) bChat.log(result);
       
             wr.close();
             rd.close();
@@ -88,5 +95,18 @@ public class bConnector {
             glizer.log.info("Receiving data failed");
         }
         return null;
+    }
+    
+    public static String getPlayerIPAddress(Player player) {
+        InetAddress addr = player.getAddress().getAddress();
+        byte[] ipAddr = addr.getAddress();
+        String ipAddrStr = "";
+        for (int i=0; i<ipAddr.length; i++) {
+            if (i > 0) {
+                ipAddrStr += ".";
+            }
+            ipAddrStr += ipAddr[i]&0xFF;
+        }
+        return ipAddrStr;
     }
 }
