@@ -28,8 +28,10 @@ public class Ban {
                 message += args[i] + " ";
             }
             if(message != null && message != "") {
-                addNote(player, recipient, "0", "1", "0", message, "-100", "0");
-                bBackupManager.addBanBackup(recipient);
+                if(addNote(player, recipient, "0", "1", "0", message, "-100", "0")) {
+                    bBackupManager.addBanBackup(recipient);
+                    bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
+                }
             } else {
                 bChat.sendMessageToPlayer(player, "&6Wrong command usage. Type &f /glizer help&6.");
             }
@@ -72,7 +74,9 @@ public class Ban {
     public static boolean unban(String command, Player player, String[] args) {
         if(args.length == 1) {
             String recipient = args[0];
-            addNote(player, recipient, "0", "0", "0", "Unban", "100", "0");
+            //addNote(player, recipient, "0", "0", "0", "Unban", "200", "0");
+            //bConfigManager.
+            // add to ban whitelist
             bBackupManager.removeBanBackup(recipient);
         }
         return true;
@@ -139,7 +143,7 @@ public class Ban {
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;
         try {
-            ok = result.getString("result");
+            ok = result.getString("response");
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
             return false;

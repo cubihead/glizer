@@ -17,7 +17,7 @@ public class Friend {
     public static boolean friends(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 0) {
-                listFriends(player, "", "list");
+                bChat.sendMessageToPlayer(player, listFriends(player, player.getName(), "list"));
                 return true;
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
@@ -29,8 +29,10 @@ public class Friend {
     public static boolean addfriend(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
-                friend(player, args[0], "add");
-                return true;
+                if(friends(player, args[0], "add")) {
+                    bChat.sendMessageToPlayer(player, "Added Friend");
+                    return true;
+                }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
@@ -41,8 +43,10 @@ public class Friend {
     public static boolean removefriend(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
-                friend(player, args[0], "remove");
-                return true;
+                if(friends(player, args[0], "remove")) {
+                    bChat.sendMessageToPlayer(player, "Removed Friend");
+                    return true;
+                }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
@@ -50,7 +54,7 @@ public class Friend {
         return true;
     }
     
-    public static boolean friend(Player player, String recipient, String doAction) {
+    public static boolean friends(Player player, String recipient, String doAction) {
         
         String ip = bConnector.getPlayerIPAddress(player);
         
@@ -59,22 +63,22 @@ public class Friend {
         url_items.put("do", doAction);
         url_items.put("account", player.getName());
         url_items.put("ip", ip);
-        url_items.put("username", recipient);
+        url_items.put("name", recipient);
 
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;
         try {
-            ok = result.getString("result");
+            ok = result.getString("response");
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
             return false;
         }
         if(ok.equalsIgnoreCase("ok")) {
-            if(glizer.D) bChat.log("[glizer] Note action done.");
+            if(glizer.D) bChat.log("[glizer] Friend action done.");
             return true;
         }
         else {
-            if(glizer.D) bChat.log("[glizer] Note action cant be done", 2);
+            if(glizer.D) bChat.log("[glizer] Friend action cant be done", 2);
             return false;
         }
     }
@@ -88,22 +92,28 @@ public class Friend {
         url_items.put("do", doAction);
         url_items.put("account", player.getName());
         url_items.put("ip", ip);
-        url_items.put("username", recipient);
+        url_items.put("name", recipient);
+        url_items.put("start", "0");
+        url_items.put("limit", "5");
 
+        // {"_size":2,"0":{"username":"beecub","friend":"mxE333xm","added":"1306588609"},"1"
+        //:
+        //{"username":"beecub","friend":"machtzentrale19","added":"1306589033"}}
+
+        
         JSONObject result = bConnector.hdl_com(url_items);
-        String ok = null;
+        
         try {
-            ok = result.getString("result");
-        } catch (JSONException e) {
-            if(glizer.D) e.printStackTrace();
-            return "error";
-        }
-        if(ok.equalsIgnoreCase("ok")) {
-            if(glizer.D) bChat.log("[glizer] Note action done.");
-            return result.toString();
-        }
-        else {
-            if(glizer.D) bChat.log("[glizer] Note action cant be done", 2);
+            int length = result.getInt("_size");
+            String friends = "&6Your Friends: &e";
+            for(int i = 0; i < length; i++) {
+                JSONObject result2 = result.getJSONObject(String.valueOf(i));
+                friends += result2.getString("friend") + ", ";
+            }
+            friends = friends.substring(0,  friends.length() - 2);
+            return friends;
+        } catch (JSONException e3) {
+            e3.printStackTrace();
             return "error";
         }
     }
