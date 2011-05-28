@@ -17,7 +17,7 @@ public class Comment {
                     message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    Ban.addNoteAction(player, recipient, "0", "0", "0", message, "0", "0");
+                    Ban.addNote(player, recipient, "0", "0", "1", message, "0", "0");
                     return true;
                 }
             }
@@ -30,7 +30,8 @@ public class Comment {
     public static boolean comments(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
-                // get comments from krim
+                String result = Ban.getNote(player, args[0], "0", "0", "1", "", "0", "0");
+                bChat.sendMessageToPlayer(player, result);
                 return true;
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
