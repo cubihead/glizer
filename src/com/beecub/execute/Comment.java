@@ -24,6 +24,7 @@ public class Comment {
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/comment&e [playername] [message]");
             return true;
         }
         return true;
@@ -48,6 +49,7 @@ public class Comment {
                 return true;
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/comments&e [playername] [(page)]");
             return true;
         }
         return true;

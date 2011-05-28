@@ -32,6 +32,7 @@ public class Warning {
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/warn&e [playername] -[reputation] [message]");
             return true;
         }
         return true;

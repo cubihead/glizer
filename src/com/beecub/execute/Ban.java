@@ -36,6 +36,8 @@ public class Ban {
                 bChat.sendMessageToPlayer(player, "&6Wrong command usage. Type &f /glizer help&6.");
             }
         }
+        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+        bChat.sendMessageToPlayer(player, "&6/globalban&e [playername] [message]");
         return true;
     }
     
@@ -51,6 +53,8 @@ public class Ban {
                 bBackupManager.addBanBackup(recipient);
             }
         }
+        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+        bChat.sendMessageToPlayer(player, "&6/localban&e [playername] [message]");
         return true;
     }
     
@@ -68,6 +72,8 @@ public class Ban {
                 addNote(player, recipient, "0", "0", "0", message, "-100", time);
             }
         }
+        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+        bChat.sendMessageToPlayer(player, "&6/tempban&e [playername] [seconds] [message]");
         return true;
     }
     
@@ -79,6 +85,8 @@ public class Ban {
             // add to ban whitelist
             bBackupManager.removeBanBackup(recipient);
         }
+        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+        bChat.sendMessageToPlayer(player, "&6/unban&e [playername]");
         return true;
     }
     
@@ -87,7 +95,7 @@ public class Ban {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
                 String name = args[0];
-                if(bBackupManager.addbanwhitelist(name)) {
+                if(bBackupManager.addBanWhiteList(name)) {
                     bChat.sendMessageToPlayer(player, "&6Completed.");
                     return true;
                 }
@@ -97,6 +105,7 @@ public class Ban {
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/addbanwhitelist&e [playername]");
             return true;
         }
         return true;
@@ -107,7 +116,7 @@ public class Ban {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
                 String name = args[0];
-                if(bBackupManager.removebanwhitelist(name)) {
+                if(bBackupManager.removeBanWhiteList(name)) {
                     bChat.sendMessageToPlayer(player, "Completed.");
                     return true;
                 }
@@ -117,6 +126,7 @@ public class Ban {
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/removebanwhitelist&e [playername]");
             return true;
         }
         return true;

@@ -23,7 +23,7 @@ public class bBackupManager {
     
     public bBackupManager(glizer glizer) {
         plugin = glizer;
-        setupbackupban();
+        setupBackupBan();
         load();
     }    
     
@@ -39,7 +39,7 @@ public class bBackupManager {
 
     
     @SuppressWarnings("static-access")
-    private void setupbackupban() {
+    private void setupBackupBan() {
         File f = new File(plugin.getDataFolder() + "/backup/", "backupban.yml");
         backupban = null;
         
@@ -56,7 +56,7 @@ public class bBackupManager {
         }
     }
     
-    public static boolean removebanwhitelist(String name) {
+    public static boolean removeBanWhiteList(String name) {
         if(banwhitelistPlayers.contains(name)) {
             backupban.removeProperty("banwhitelist." + name);
             backupban.save();
@@ -66,7 +66,7 @@ public class bBackupManager {
         return false;
     }
     
-    public static boolean addbanwhitelist(String name) {
+    public static boolean addBanWhiteList(String name) {
         if(!banwhitelistPlayers.contains(name)) {
             backupban.setProperty("banwhitelist." + name, true);
             backupban.save();
@@ -74,6 +74,10 @@ public class bBackupManager {
             return true;
         }
         return false;
+    }
+    
+    public static void checkBanWhiteList(String name) {
+        
     }
     
     public static boolean addBanBackup(String playername) {

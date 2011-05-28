@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.beecub.command.bCommandRouter;
+import com.beecub.util.bBackupManager;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
 import com.beecub.util.bConnector;
@@ -51,6 +52,7 @@ public class glizer extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Lowest, this);
 	    
 		bConfigManager bConfigManager = new bConfigManager(this);
+		bBackupManager bBackupManager = new bBackupManager(this);
 		bMessageManager bTextManager = new bMessageManager(this);
 		bChat bChat = new bChat(this.getServer());
 		

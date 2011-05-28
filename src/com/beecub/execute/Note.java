@@ -24,6 +24,7 @@ public class Note {
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/note&e [playername] [message]");
             return true;
         }
         return true;
@@ -48,6 +49,7 @@ public class Note {
                 return true;
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/notes&e [playername] [(page)]");
             return true;
         }
         return true;
