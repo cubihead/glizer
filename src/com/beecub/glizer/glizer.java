@@ -26,6 +26,7 @@ import com.beecub.util.bConfigManager;
 import com.beecub.util.bConnector;
 import com.beecub.util.bMessageManager;
 import com.beecub.util.bTimer;
+import com.beecub.util.bWhitelist;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -136,7 +137,19 @@ public class glizer extends JavaPlugin {
         if(onlinemode == false) url_items.put("offlinemode", "0");
         else url_items.put("offlinemode", "1");
         url_items.put("banborder", bConfigManager.banborder);
-        url_items.put("owner", owner);
+        url_items.put("owner", owner);        
+        
+        String users = "";
+        if(bConfigManager.usewhitelist) {
+            for(String player : bWhitelist.whitelistPlayers) {
+                users += player + ",";
+            }
+            if(users.length() > 0) users = users.substring(0, users.length() - 1);
+        }
+        url_items.put("whitelistusers", users);
+        
+        
+        
         
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;
@@ -144,16 +157,16 @@ public class glizer extends JavaPlugin {
             ok = result.getString("response");
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
-            bChat.log("&6 Cant establish a connection to glizer-server! glizer is now in offline mode.", 2);
+            bChat.log("Cant establish a connection to glizer-server! glizer is now in offline mode", 2);
             offline = true;
             return false;
         } 
         if(ok.equalsIgnoreCase("ok")) {
-            bChat.log("Connected to glizer-server.");
+            bChat.log("Connected to glizer-server");
             return true;
         }
         else {
-            bChat.log("Failure! Wrong server configuration data sent.", 2);
+            bChat.log("Failure! Wrong server configuration data sent", 2);
             offline = true;
             return false;
         }
@@ -164,7 +177,7 @@ public class glizer extends JavaPlugin {
         Server server = this.getServer();     
         
         HashMap<String, String> url_items = new HashMap<String, String>();
-        url_items.put("exec", "stop");
+        url_items.put("exec", "shutdown");
         url_items.put("account", "server");
         url_items.put("ip", "1.1.1.1");
         

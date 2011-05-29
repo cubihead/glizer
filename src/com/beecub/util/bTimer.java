@@ -19,14 +19,15 @@ public class bTimer extends TimerTask {
     
     public void run() {
         Player [] players = glizer.getServer().getOnlinePlayers();
-        heartbeat(players);
-        Timer scheduler = new Timer();
-        bTimer scheduleMe = new bTimer(glizer, scheduler);
-        scheduler.schedule(scheduleMe, 5 * 60 * 1000);
+        if(heartbeat(players)) {
+            Timer scheduler = new Timer();
+            bTimer scheduleMe = new bTimer(glizer, scheduler);
+            scheduler.schedule(scheduleMe, 5 * 60 * 1000);
+        }
     }
     
     @SuppressWarnings("static-access")
-    public void heartbeat(Player [] players) {
+    public boolean heartbeat(Player [] players) {
         
         HashMap<String, String> url_items = new HashMap<String, String>();        
         url_items.put("exec", "heartbeat");
@@ -40,7 +41,7 @@ public class bTimer extends TimerTask {
             url_items.put("ip_" + player.getName(), bConnector.getPlayerIPAddress(player));
         }
         if(players.length > 0) users = users.substring(0, users.length() - 1);
-        url_items.put("users", users);        
+        url_items.put("users", users);
         
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;
@@ -56,5 +57,6 @@ public class bTimer extends TimerTask {
         else {
             bChat.log("Heartbeat failed", 2);
         }
+        return true;
     }
 }

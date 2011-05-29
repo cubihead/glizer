@@ -22,7 +22,7 @@ public class bBackupManager {
         setupBackupBan();
         setupWhitelist();
         load();
-    }    
+    }
     
     private static void load() {
         whitelist.load();
@@ -86,7 +86,7 @@ public class bBackupManager {
     /* BANS */
     
     private void setupBackupBan() {
-        File f = new File(plugin.getDataFolder() + "/backup/", "backupban.yml");
+        File f = new File(plugin.getDataFolder() + "/banbackup/", "backupban.yml");
         backupban = null;
         
         if (f.exists())
@@ -96,7 +96,7 @@ public class bBackupManager {
         }
         else {
             File confFile;
-            confFile = new File(plugin.getDataFolder()+ "/backup/", "backupban.yml");
+            confFile = new File(plugin.getDataFolder()+ "/banbackup/", "backupban.yml");
             backupban = new Configuration(confFile);
             backupban.save();
         }

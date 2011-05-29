@@ -22,7 +22,7 @@ public class bConnector {
     public static JSONObject hdl_com(HashMap<String, String> items) 
     {
         String url_req = urlParse(items);
-        glizer.log.info("url_req " + url_req);
+        if(glizer.D) glizer.log.info("url_req " + url_req);
         String json_text = APIRequest(url_req);
         JSONObject output = getData(json_text);
         
