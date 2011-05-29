@@ -48,13 +48,13 @@ public class bTimer extends TimerTask {
             ok = result.getString("response");
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
-            bChat.log("Unable to do heartbeat!", 2);
+            bChat.log("Unable to do heartbeat", 2);
         }
         if(ok.equalsIgnoreCase("ok")) {
-            bChat.log("[glizer] Heartbeat.");
+            bChat.log("Heartbeat");
         }
         else {
-            bChat.log("[glizer] Heartbeat failed.", 2);
+            bChat.log("Heartbeat failed", 2);
         }
     }
 }

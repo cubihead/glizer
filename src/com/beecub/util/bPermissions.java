@@ -202,6 +202,22 @@ public class bPermissions {
                 return true;
             }
         }
+        else if(command.equalsIgnoreCase("addwhitelist")) {
+            if(glizer.Permissions.permission(player, "glizer.whitelist.add")) {
+                return true;
+            }
+            if(glizer.Permissions.permission(player, moderator)) {
+                return true;
+            }
+        }
+        else if(command.equalsIgnoreCase("removewhitelist")) {
+            if(glizer.Permissions.permission(player, "glizer.whitelist.remove")) {
+                return true;
+            }
+            if(glizer.Permissions.permission(player, moderator)) {
+                return true;
+            }
+        }
         else if(command.equalsIgnoreCase("glizer")) {
             if(glizer.Permissions.permission(player, "glizer.reload")) {
                 return true;

@@ -12,6 +12,7 @@ import com.beecub.execute.Other;
 import com.beecub.execute.Profile;
 import com.beecub.execute.Rating;
 import com.beecub.execute.Warning;
+import com.beecub.execute.Whitelist;
 import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
 
@@ -128,6 +129,14 @@ public class bCommandRouter {
             }
             else if(command.equals("friends")) {
                 Friend.friends(command, player, args);
+                return true;
+            }
+            else if(command.equals("addwhitelist")) {
+                Whitelist.whitelistAdd(command, player, args);
+                return true;
+            }
+            else if(command.equals("removewhitelist")) {
+                Whitelist.whitelistRemove(command, player, args);
                 return true;
             }
             else if(command.equals("theanswertolifetheuniverseandeverything")) {

@@ -18,6 +18,7 @@ public class bConfigManager {
     public static String owner;
     public static String globalreputation;
     public static String banborder;
+    public static boolean usewhitelist;
     
 	
     public bConfigManager(glizer glizer) {
@@ -34,6 +35,7 @@ public class bConfigManager {
     	owner = conf.getString("owner", null);
     	banborder = conf.getString("banborder", "-40");
     	glizer.D = conf.getBoolean("debugmode", false);
+    	usewhitelist = conf.getBoolean("features.usewhitelist", false);
     }
 	
 	public static void reload() {
@@ -58,6 +60,7 @@ public class bConfigManager {
             conf.setProperty("owner", "playername");
             conf.setProperty("banborder", "-40");
             conf.setProperty("debugmode", false);
+            conf.setProperty("features.usewhitelist", false);
             conf.save();
         }
 	}

@@ -28,7 +28,9 @@ public class Profile {
         if(args.length == 2) {
             String field = args[0];
             String value = args[1];
-            editProfile(player, field, value);
+            if(!field.equalsIgnoreCase("mehr")) {
+                editProfile(player, field, value);
+            }
             return true;
         }
         bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);

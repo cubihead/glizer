@@ -110,6 +110,14 @@ commands:
     description: reload glizer config
     usage: |
            /<command> [reload]
+  addwhitelist:
+    description: reload glizer config
+    usage: |
+           /<command> [name]
+  removewhitelist:
+    description: reload glizer config
+    usage: |
+           /<command> [name]
   theanswertolifetheuniverseandeverything:
     description: The Answer to Life the Universum and Everything.
     usage: |

@@ -15,11 +15,6 @@ public class bBackupManager {
     protected static Configuration whitelist;
     public static List<String> bannedPlayers = new LinkedList<String>();
     public static List<String> whitelistPlayers = new LinkedList<String>();
-    public static String key;
-    public static String servername;
-    public static String owner;
-    public static String banborder;
-    public static String globalreputation;
     
     
     public bBackupManager(glizer glizer) {
@@ -30,6 +25,7 @@ public class bBackupManager {
     }    
     
     private static void load() {
+        whitelist.load();
         backupban.load();
         
         bannedPlayers = backupban.getStringList("", bannedPlayers);
@@ -44,7 +40,7 @@ public class bBackupManager {
     /* WHITELIST */
     
     private void setupWhitelist() {
-        File f = new File(plugin.getDataFolder() + "/whitelist/", "whitelist.yml");
+        File f = new File(plugin.getDataFolder() + "/banwhitelist/", "whitelist.yml");
         whitelist = null;
         
         if (f.exists())
@@ -54,7 +50,7 @@ public class bBackupManager {
         }
         else {
             File confFile;
-            confFile = new File(plugin.getDataFolder()+ "/whitelist/", "whitelist.yml");
+            confFile = new File(plugin.getDataFolder()+ "/banwhitelist/", "whitelist.yml");
             whitelist = new Configuration(confFile);
             whitelist.save();
         }

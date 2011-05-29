@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import com.beecub.util.bBackupManager;
 import com.beecub.util.bChat;
+import com.beecub.util.bConfigManager;
 import com.beecub.util.bConnector;
 
 
@@ -40,6 +41,22 @@ public class glizerPlayerListener extends PlayerListener {
         url_items.put("userip", ip);
         
         JSONObject result = bConnector.hdl_com(url_items);
+        
+        
+        // check whitelist
+        if(bConfigManager.usewhitelist) {
+            try {
+                int check = result.getInt("whitelisted");
+                if(check == 1) {
+                    kick = false;
+                }
+            }
+            catch(Exception e) {
+                //e.printStackTrace();
+            }
+        }
+        
+        // check ban
         boolean ok = true;
         try {
             ok = result.getBoolean("banned");
@@ -48,7 +65,7 @@ public class glizerPlayerListener extends PlayerListener {
                 kick = false;
             }
             else {
-                bChat.log("Player " + player.getName() + " is banned from this server. Kick.", 2);
+                bChat.log("Player " + player.getName() + " is banned from this server. Kick", 2);
                 kick = true;
             }
         } catch (JSONException e) {
@@ -58,6 +75,7 @@ public class glizerPlayerListener extends PlayerListener {
                 kick = false;
             }
         }
+        // check developer
         try {
             int check = result.getInt("developer");
             if(check == 1) {
@@ -68,6 +86,7 @@ public class glizerPlayerListener extends PlayerListener {
         catch(Exception e) {
             //e.printStackTrace();
         }
+        
         if(bBackupManager.checkBanWhiteList(player.getName())) {
             kick = false;
         }
@@ -75,7 +94,7 @@ public class glizerPlayerListener extends PlayerListener {
             player.kickPlayer("You are banned from this server. Check glizer.net");
         }
         
-        bChat.sendMessageToPlayer(player, "&6This server is running &2glizer - the Minecraft Globalizer&6.");
+        bChat.sendMessageToPlayer(player, "&6This server is running &2glizer - the Minecraft Globalizer&6");
 	}
 }
 
