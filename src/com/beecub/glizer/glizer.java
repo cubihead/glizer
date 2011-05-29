@@ -57,7 +57,7 @@ public class glizer extends JavaPlugin {
 		bMessageManager bTextManager = new bMessageManager(this);
 		bChat bChat = new bChat(this.getServer());
 		
-		serverport = this.getServer().getIp() + this.getServer().getPort();
+		serverport = /*this.getServer().getIp() +*/ String.valueOf(this.getServer().getPort());
 		
         if(setupMessages()) {
         }

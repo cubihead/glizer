@@ -20,21 +20,26 @@ public class Profile {
             return true;
         }
         bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/profile&e [field] [value]");
+        bChat.sendMessageToPlayer(player, "&6/profile&e [playername]");
         return true;
     }
     
     public static boolean editprofile(String command, Player player, String[] args) {
-        if(args.length == 2) {
+        if(args.length >= 2) {
             String field = args[0];
-            String value = args[1];
+            String message = "";
+            for(int i = 1; i < args.length; i++) {
+                message += args[i] + " ";
+            }
             if(!field.equalsIgnoreCase("mehr")) {
-                editProfile(player, field, value);
+                if(editProfile(player, field, message).equalsIgnoreCase("ok")) {
+                    bChat.sendMessageToPlayer(player, "&6Done");
+                }
             }
             return true;
         }
         bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/editprofile&e [playername]");
+        bChat.sendMessageToPlayer(player, "&6/editprofile&e [field] [value]");
         return true;
     }
     
@@ -64,7 +69,7 @@ public class Profile {
         
         try {
             if(result.getString("response").equalsIgnoreCase("ok")) {
-                return "Ok";
+                return "ok";
             }
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();

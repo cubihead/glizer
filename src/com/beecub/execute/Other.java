@@ -75,7 +75,12 @@ public class Other {
                 }
             }
             else if(args.length == 0) {
-                showHelpPage(player, 0);
+                //showHelpPage(player, 0);
+                bChat.sendMessageToPlayer(player, "&6Choose one of these help topics:");
+                bChat.sendMessageToPlayer(player, "&e/glizerhelp + ");
+                bChat.sendMessageToPlayer(player, "&6Bans   Notes   Warnings   Rating");
+                bChat.sendMessageToPlayer(player, "&6Profile   Friends   Comments   Messaging");
+                bChat.sendMessageToPlayer(player, "&6BanWhitelist   Whitelist");
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
@@ -92,6 +97,11 @@ public class Other {
         
     }
     private static void showHelpTopic(Player player, String topic) {
-        
+        if(topic.equalsIgnoreCase("")) {
+            
+        }
+        else if(topic.equalsIgnoreCase("Bans")) {
+            
+        }
     }
 }

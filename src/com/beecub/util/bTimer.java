@@ -17,12 +17,16 @@ public class bTimer extends TimerTask {
         this.glizer = glizer;
     }
     
+    @SuppressWarnings("static-access")
     public void run() {
         Player [] players = glizer.getServer().getOnlinePlayers();
         if(heartbeat(players)) {
             Timer scheduler = new Timer();
             bTimer scheduleMe = new bTimer(glizer, scheduler);
             scheduler.schedule(scheduleMe, 5 * 60 * 1000);
+        }
+        else {
+            if(glizer.D) bChat.log("Heartbeat too fast, cancel"); 
         }
     }
     

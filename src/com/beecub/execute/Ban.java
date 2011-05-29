@@ -183,6 +183,10 @@ public class Ban {
             if(glizer.D) bChat.log("Note add action done.");
             return true;
         }
+        else if(ok.equalsIgnoreCase("nochange")) {
+            if(glizer.D) bChat.log("Note action nochange reputation");
+            return true;
+        }
         else {
             if(glizer.D) bChat.log("Note add action cant be done", 2);
             return false;

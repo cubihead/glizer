@@ -10,21 +10,29 @@ public class Note {
     
     public static boolean note(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
-            if(args.length >= 2) {
+            if(args.length >= 3) {
                 String message = "";
                 String recipient = args[0];
-                for(int i = 1; i < args.length; i++) {
+                int value = 0;
+                try {
+                    value = Integer.valueOf(args[1]);
+                }
+                catch(Exception e) {
+                    bChat.sendMessageToPlayer(player, "&6This is not a Integer value: &e" + args[1]);
+                    return false;
+                }
+                for(int i = 2; i < args.length; i++) {
                     message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    if(Ban.addNote(player, recipient, "0", "1", "0", message, "0", "0", "0")) {
+                    if(Ban.addNote(player, recipient, "0", "1", "0", message, String.valueOf(value), "0", "0")) {
                         bChat.sendMessageToPlayer(player, "&6Note added");
                         return true;
                     }
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-            bChat.sendMessageToPlayer(player, "&6/note&e [playername] [message]");
+            bChat.sendMessageToPlayer(player, "&6/note&e [playername] [reputation|-100 to 100] [message]");
             return true;
         }
         return true;
