@@ -48,8 +48,7 @@ public class bTimer extends TimerTask {
             
             JSONObject result = bConnector.hdl_com(url_items);
             String check = bConnector.checkResult(result);
-            
-            
+                        
             if(check.equalsIgnoreCase("ok")) {
                 bChat.log("Heartbeat, Online Players: " + players.length);
                 return true;
@@ -63,6 +62,7 @@ public class bTimer extends TimerTask {
                 return true;
             }
             else {
+                bChat.log("Heartbeat: Status unkown");
                 return true;
             }
             

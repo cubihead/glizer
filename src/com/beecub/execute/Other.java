@@ -57,7 +57,7 @@ public class Other {
         }
         return true;
     }
-
+    
     public static boolean glizerhelp(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {

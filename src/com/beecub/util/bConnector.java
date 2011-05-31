@@ -149,9 +149,7 @@ public class bConnector {
             } catch(JSONException e) {
                 if(glizer.D) e.printStackTrace();
                 try {
-                    if(result.getString("response").equalsIgnoreCase("ok")) {
-                        ret = "ok";
-                    }
+                    ret = result.getString("response");
                 } catch(JSONException e1) {
                     if(glizer.D) e1.printStackTrace();
                     return ret = "unkown";

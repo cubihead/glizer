@@ -39,6 +39,9 @@ public class Ban {
                         }
                         return true;
                     }
+                    else {
+                        return true;
+                    }
                 } else {
                     bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
                     bChat.sendMessageToPlayer(player, "&6/globalban&e [playername] [message]");
@@ -202,6 +205,29 @@ public class Ban {
         url_items.put("ban", ban);
         
         JSONObject result = bConnector.hdl_com(url_items);
+        String check = bConnector.checkResult(result);
+        
+        if(check.equalsIgnoreCase("ok")) {
+            if(glizer.D) bChat.log("Note add action done");
+            return true;
+        }
+        else if(check.equalsIgnoreCase("nochange")) {
+            if(glizer.D) bChat.log("Note add action done, nochange reputation");
+            return true;
+        }
+        else if(check.equalsIgnoreCase("never connected")) {
+            if(glizer.D) bChat.log("Note add action cant be done, player never connected to this server");
+            bChat.sendMessageToPlayer(player, "&6Error, Player &e" + recipient + "&6 was never connected to this server");
+            return false;
+        }
+        else if(check.equalsIgnoreCase("not yourself")) {
+            if(glizer.D) bChat.log("Note add action cant be done, not to command user himself");
+            bChat.sendMessageToPlayer(player, "&6Error, you cant do this to yourself");
+            return false;
+        }
+        return true;
+        
+        /*
         String ok = null;
         try {
             ok = result.getString("response");
@@ -221,6 +247,7 @@ public class Ban {
             if(glizer.D) bChat.log("Note add action cant be done", 2);
             return false;
         }
+        */
     }
     
     public static String getNote(Player player, String recipient, String type, String local, String start, String limit) {

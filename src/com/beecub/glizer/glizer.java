@@ -166,6 +166,7 @@ public class glizer extends JavaPlugin {
         } 
         if(ok.equalsIgnoreCase("ok")) {
             bChat.log("Connected to glizer-server");
+            offline = false;
             return true;
         }
         else {
