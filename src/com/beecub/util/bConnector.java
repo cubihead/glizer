@@ -108,4 +108,60 @@ public class bConnector {
         }
         return ipAddrStr;
     }
+    
+    public static String checkResult(JSONObject result) {
+        String ret = "";               
+        if(result != null) {
+            try {
+                if(result.getString("error").equalsIgnoreCase("1")) {
+                    int errno = result.getInt("errno");
+                    switch(errno) {
+                        case 1000:
+                            ret = "wrong ip";
+                        case 1001:
+                            ret = "wrong ip";
+                        case 1002:
+                            ret = "no record";
+                        case 1003:
+                            ret = "sql error";
+                        case 1004:
+                            ret = "missing variable";
+                        case 1005:
+                            ret = "to fast";
+                        case 1006:
+                            ret = "never connected";
+                        case 1007:
+                            ret = "exec not found";
+                        case 1008:
+                            ret = "wrong data type";
+                        case 1009:
+                            ret = "server as user";
+                        case 1010:
+                            ret = "not allowed";
+                        case 1011:
+                            ret = "not from here";
+                        case 1012:
+                            ret = "not yourself";
+                        default:
+                            ret = "unknown error";
+                    }
+                }
+            } catch(JSONException e) {
+                if(glizer.D) e.printStackTrace();
+                try {
+                    if(result.getString("response").equalsIgnoreCase("ok")) {
+                        ret = "ok";
+                    }
+                } catch(JSONException e1) {
+                    if(glizer.D) e1.printStackTrace();
+                    return ret = "unkown";
+                }
+            }
+        }
+        else {
+            ret = "null";
+        }
+        if(glizer.D) bChat.log("[glizer debug] " + ret);
+        return ret;
+    }
 }

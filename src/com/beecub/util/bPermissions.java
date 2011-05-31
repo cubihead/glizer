@@ -226,6 +226,14 @@ public class bPermissions {
                 return true;
             }
         }
+        else if(command.equalsIgnoreCase("glizerhelp")) {
+            if(glizer.Permissions.permission(player, "glizer.help")) {
+                return true;
+            }
+            if(glizer.Permissions.permission(player, user)) {
+                return true;
+            }
+        }
         else {
             bChat.sendMessageToPlayer(player, bMessageManager.messagePermissions);
             return false;

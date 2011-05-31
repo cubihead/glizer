@@ -72,6 +72,7 @@ public class Other {
                 catch(Exception e) {
                     String topic = args[0];
                     showHelpTopic(player, topic);
+                    return true;
                 }
             }
             else if(args.length == 0) {
@@ -81,6 +82,7 @@ public class Other {
                 bChat.sendMessageToPlayer(player, "&6Bans   Notes   Warnings   Rating");
                 bChat.sendMessageToPlayer(player, "&6Profile   Friends   Comments   Messaging");
                 bChat.sendMessageToPlayer(player, "&6BanWhitelist   Whitelist");
+                return true;
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
@@ -96,12 +98,61 @@ public class Other {
     private static void showHelpPage(Player player, int page) {
         
     }
-    private static void showHelpTopic(Player player, String topic) {
+    private static boolean showHelpTopic(Player player, String topic) {
         if(topic.equalsIgnoreCase("")) {
-            
+            return true;
         }
         else if(topic.equalsIgnoreCase("Bans")) {
-            
+            bChat.sendMessageToPlayer(player, "&6/globalban&e [name] [reason]");
+            bChat.sendMessageToPlayer(player, "&6/localban&e [name] [reason]");
+            bChat.sendMessageToPlayer(player, "&6/tempban&e [playername] [seconds] [message]");
+            bChat.sendMessageToPlayer(player, "&6/unban&e [name] [reason]");
+            return true;
         }
+        else if(topic.equalsIgnoreCase("Notes")) {
+            bChat.sendMessageToPlayer(player, "&6/notes&e [name]");
+            bChat.sendMessageToPlayer(player, "&6/note&e [name] [reputation|-100 to 100] [reason]");
+            return true;
+        }
+        else if(topic.equalsIgnoreCase("Warnings")) {
+            bChat.sendMessageToPlayer(player, "&6/warnings&e [name]");
+            bChat.sendMessageToPlayer(player, "&6/warn&e [name] [reputation|-100 to 100] [reason]");
+            return true;
+        }
+        else if(topic.equalsIgnoreCase("Rating")) {
+            bChat.sendMessageToPlayer(player, "&6/rateserver&e [value|0 to 10 (10 is best)]");
+            return true;
+        }
+        else if(topic.equalsIgnoreCase("Profile")) {
+            bChat.sendMessageToPlayer(player, "&6/profile&e [name]");
+            bChat.sendMessageToPlayer(player, "&6/editprofile&e [field] [value]");
+            bChat.sendMessageToPlayer(player, "&6Available Fields:&e age | status | realname | more soon!");
+            return true;
+        }
+        else if(topic.equalsIgnoreCase("Friends")) {
+            bChat.sendMessageToPlayer(player, "&6/friends&e [name]");
+            bChat.sendMessageToPlayer(player, "&6/addfriend&e [name]");
+            bChat.sendMessageToPlayer(player, "&6/removefriend&e [name]");
+            bChat.sendMessageToPlayer(player, "&6/friendsonline&e [name] &6- soon!");
+            return true;
+        }
+        else if(topic.equalsIgnoreCase("Comments")) {
+            bChat.sendMessageToPlayer(player, "&6/comments&e [name]");
+            bChat.sendMessageToPlayer(player, "&6/comment&e [name] [text]");
+            return true;
+        }
+        else if(topic.equalsIgnoreCase("Messaging")) {
+            bChat.sendMessageToPlayer(player, "&6soon!");
+            return true;
+        }
+        else if(topic.equalsIgnoreCase("BanWhitelist")) {
+            
+            return true;
+        }
+        else if(topic.equalsIgnoreCase("Whitelist")) {
+            
+            return true;
+        }
+        return true;
     }
 }

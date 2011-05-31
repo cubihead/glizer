@@ -43,6 +43,7 @@ public class glizer extends JavaPlugin {
 	public static String serverport;
 	public static boolean offline = true;
 	public static boolean D;
+	public static glizer plugin;
 	
 	@SuppressWarnings({ "unused", "static-access" })
     public void onEnable() {
@@ -55,7 +56,10 @@ public class glizer extends JavaPlugin {
 		bConfigManager bConfigManager = new bConfigManager(this);
 		bBackupManager bBackupManager = new bBackupManager(this);
 		bMessageManager bTextManager = new bMessageManager(this);
+		bWhitelist bWhitelist = new bWhitelist(this);
 		bChat bChat = new bChat(this.getServer());
+		
+		plugin = this;
 		
 		serverport = /*this.getServer().getIp() +*/ String.valueOf(this.getServer().getPort());
 		
@@ -148,8 +152,7 @@ public class glizer extends JavaPlugin {
         }
         url_items.put("whitelistusers", users);
         
-        
-        
+              
         
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;

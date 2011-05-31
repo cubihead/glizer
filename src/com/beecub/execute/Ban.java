@@ -21,97 +21,128 @@ public class Ban {
     }
     
     public static boolean globalban(String command, Player player, String[] args) {
-        if(args.length >= 2) {
-            String message = "";
-            String recipient = args[0];
-            for(int i = 1; i < args.length; i++) {
-                message += args[i] + " ";
-            }
-            if(message != null && message != "") {
-                if(addNote(player, recipient, "0", "1", "0", message, "-100", "0", "0")) {
-                    bBackupManager.addBanBackup(recipient);
-                    bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
+        if(bPermissions.checkPermission(player, command)) {
+            if(args.length >= 2) {
+                String message = "";
+                String recipient = args[0];
+                for(int i = 1; i < args.length; i++) {
+                    message += args[i] + " ";
                 }
-            } else {
-                bChat.sendMessageToPlayer(player, "&6Wrong command usage. Type &f /glizer help&6.");
+                if(message != null && message != "") {
+                    if(addNote(player, recipient, "0", "1", "0", message, "-100", "0", "0")) {
+                        bBackupManager.addBanBackup(recipient);
+                        bChat.broadcastMessage("&6" + player.getName() + " banned player: &e" + recipient);
+                        Player result = null;
+                        result = glizer.plugin.getServer().getPlayer(recipient);
+                        if(result != null) {
+                            result.kickPlayer("You were banned from this server. Check glizer.net");
+                        }
+                        return true;
+                    }
+                } else {
+                    bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+                    bChat.sendMessageToPlayer(player, "&6/globalban&e [playername] [message]");
+                }
             }
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/globalban&e [playername] [message]");
+            return true;
         }
-        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/globalban&e [playername] [message]");
         return true;
     }
     
     public static boolean localBan(String command, Player player, String[] args) {
-        if(args.length >= 2) {
-            String message = "";
-            String recipient = args[0];
-            for(int i = 1; i < args.length; i++) {
-                message += args[i] + " ";
-            }
-            if(message != null && message != "") {
-                if(addNote(player, recipient, "0", "0", "0", message, "-200", "0", "1")) {
-                    bBackupManager.addBanBackup(recipient);
-                    bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
+        if(bPermissions.checkPermission(player, command)) {
+            if(args.length >= 2) {
+                String message = "";
+                String recipient = args[0];
+                for(int i = 1; i < args.length; i++) {
+                    message += args[i] + " ";
+                }
+                if(message != null && message != "") {
+                    if(addNote(player, recipient, "0", "0", "0", message, "-200", "0", "1")) {
+                        bBackupManager.addBanBackup(recipient);
+                        bChat.broadcastMessage("&6" + player.getName() + " banned player: &e" + recipient);
+                        Player result = null;
+                        result = glizer.plugin.getServer().getPlayer(recipient);
+                        if(result != null) {
+                            result.kickPlayer("You are banned from this server. Check glizer.net");
+                        }
+                        return true;
+                    }
                 }
             }
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/localban&e [playername] [message]");
+            return true;
         }
-        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/localban&e [playername] [message]");
         return true;
     }
     
     public static boolean tempban(String command, Player player, String[] args) {
-        if(args.length >= 2) {
-            String message = "";
-            String recipient = args[0];
-            String time = args[1];
-            if(args.length >= 3) {
-                for(int i = 2; i < args.length; i++) {
-                    message += args[i] + " ";
+        if(bPermissions.checkPermission(player, command)) {
+            if(args.length >= 2) {
+                String message = "";
+                String recipient = args[0];
+                String time = args[1];
+                if(args.length >= 3) {
+                    for(int i = 2; i < args.length; i++) {
+                        message += args[i] + " ";
+                    }
+                }
+                if(message != null && message != "") {
+                    if(addNote(player, recipient, "0", "0", "0", message, "-100", time, "0")) {
+                        bChat.broadcastMessage("&6" + player.getName() + " banned player: &e" + recipient);
+                        Player result = null;
+                        result = glizer.plugin.getServer().getPlayer(recipient);
+                        if(result != null) {
+                            result.kickPlayer("You were banned from this server. Check glizer.net");
+                        }
+                        return true;
+                    }
                 }
             }
-            if(message != null && message != "") {
-                if(addNote(player, recipient, "0", "0", "0", message, "-100", time, "0")) {
-                    bChat.broadcastMessage("&6" + player.getName() + " banned player: " + recipient);
-                }
-            }
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/tempban&e [playername] [seconds] [message]");
+            return true;
         }
-        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/tempban&e [playername] [seconds] [message]");
         return true;
     }
     
     public static boolean unban(String command, Player player, String[] args) {
-        if(args.length >= 2) {
-            boolean global = true;
-            String message = "";
-            String recipient = args[0];
-            String rep = getRep(player, recipient);
-            if(rep.equalsIgnoreCase("local") || rep.equalsIgnoreCase("not")) {
-                global = false;
-            }
-            
-            for(int i = 1; i < args.length; i++) {
-                message += args[i] + " ";
-            }
-            if(message != null && message != "") {
-                String glob = "0";
-                if(global) glob = "1";
-                if(addNote(player, recipient, "0", glob, "0", message, "100", "0", "0")) {
-                    bBackupManager.addBanBackup(recipient);
-                    bChat.broadcastMessage("&6" + player.getName() + " unbanned player: " + recipient);
+        if(bPermissions.checkPermission(player, command)) {
+            if(args.length >= 2) {
+                boolean global = true;
+                String message = "";
+                String recipient = args[0];
+                String rep = getRep(player, recipient);
+                if(rep.equalsIgnoreCase("local") || rep.equalsIgnoreCase("not")) {
+                    global = false;
                 }
-            } else {
-                bChat.sendMessageToPlayer(player, "&6Wrong command usage. Type &f /glizer help&6.");
+                
+                for(int i = 1; i < args.length; i++) {
+                    message += args[i] + " ";
+                }
+                if(message != null && message != "") {
+                    String glob = "0";
+                    if(global) glob = "1";
+                    if(addNote(player, recipient, "0", glob, "0", message, "100", "0", "0")) {
+                        bBackupManager.addBanBackup(recipient);
+                        bChat.broadcastMessage("&6" + player.getName() + " unbanned player: &e" + recipient);
+                        return true;
+                    }
+                } else {
+                    bChat.sendMessageToPlayer(player, "&6Wrong command usage. Type &f /glizer help&6.");
+                }
             }
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/unban&e [playername] [message]");
+            return true;
         }
-        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/unban&e [playername] [message]");
         return true;
     }
     
-    public static boolean addbanwhitelist(String command, Player player, String[] args) {
-        
+    public static boolean addbanwhitelist(String command, Player player, String[] args) {        
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
                 String name = args[0];
@@ -131,8 +162,7 @@ public class Ban {
         return true;
     }
     
-    public static boolean removebanwhitelist(String command, Player player, String[] args) {
-        
+    public static boolean removebanwhitelist(String command, Player player, String[] args) {        
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
                 String name = args[0];
@@ -263,7 +293,6 @@ public class Ban {
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
             return "not";
-        }
-        
+        }        
     }
 }

@@ -39,18 +39,21 @@ public class Warning {
     }
     
     public static boolean warnings(String command, Player player, String[] args) {
-        Note.notes(command, player, args);
-        /*
         if(bPermissions.checkPermission(player, command)) {
-            if(args.length == 1) {
-                //String result = Ban.getNote(player, args[0], "0", "1", "1", "", "0", "0");
-                //bChat.sendMessageToPlayer(player, result);
+            Note.notes(command, player, args);
+            /*
+            if(bPermissions.checkPermission(player, command)) {
+                if(args.length == 1) {
+                    //String result = Ban.getNote(player, args[0], "0", "1", "1", "", "0", "0");
+                    //bChat.sendMessageToPlayer(player, result);
+                    return true;
+                }
+                bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
                 return true;
             }
-            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            */
             return true;
         }
-        */
         return true;
     }
 }

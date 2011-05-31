@@ -33,8 +33,8 @@ public class bConfigManager {
     	key = conf.getString("APIkey", null);
     	servername = conf.getString("servername", null);
     	owner = conf.getString("owner", null);
-    	banborder = conf.getString("banborder", "-40");
-    	glizer.D = conf.getBoolean("debugmode", false);
+    	banborder = conf.getString("options.banborder", "-40");
+    	glizer.D = conf.getBoolean("options.debugmode", false);
     	usewhitelist = conf.getBoolean("features.usewhitelist", false);
     }
 	
@@ -55,11 +55,11 @@ public class bConfigManager {
             File confFile;
             confFile = new File(plugin.getDataFolder(), "config.yml");
             conf = new Configuration(confFile);
-            conf.setProperty("APIkey", "0");
-            conf.setProperty("servername", "name");
-            conf.setProperty("owner", "playername");
-            conf.setProperty("banborder", "-40");
-            conf.setProperty("debugmode", false);
+            conf.setProperty("APIkey", "Add your API-Key here");
+            conf.setProperty("servername", "Add your servername here");
+            conf.setProperty("owner", "Add your name here");
+            conf.setProperty("options.banborder", "-40");
+            conf.setProperty("options.debugmode", false);
             conf.setProperty("features.usewhitelist", false);
             conf.save();
         }

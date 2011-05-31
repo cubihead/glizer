@@ -57,7 +57,7 @@ public class Whitelist {
         String ip = bConnector.getPlayerIPAddress(player);
         
         HashMap<String, String> url_items = new HashMap<String, String>();
-        url_items.put("exec", "notes");
+        url_items.put("exec", "whitelist");
         url_items.put("do", action);
         url_items.put("account", player.getName());
         url_items.put("ip", ip);

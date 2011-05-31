@@ -10,36 +10,43 @@ import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
 import com.beecub.util.bConnector;
 import com.beecub.util.bMessageManager;
+import com.beecub.util.bPermissions;
 
 public class Profile {
 
     public static boolean profile(String command, Player player, String[] args) {
-        if(args.length == 1) {
-            String recipient = args[0];
-            showProfile(player, recipient);
+        if(bPermissions.checkPermission(player, command)) {
+            if(args.length == 1) {
+                String recipient = args[0];
+                showProfile(player, recipient);
+                return true;
+            }
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/profile&e [playername]");
             return true;
         }
-        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/profile&e [playername]");
         return true;
     }
     
     public static boolean editprofile(String command, Player player, String[] args) {
-        if(args.length >= 2) {
-            String field = args[0];
-            String message = "";
-            for(int i = 1; i < args.length; i++) {
-                message += args[i] + " ";
-            }
-            if(!field.equalsIgnoreCase("mehr")) {
-                if(editProfile(player, field, message).equalsIgnoreCase("ok")) {
-                    bChat.sendMessageToPlayer(player, "&6Done");
+        if(bPermissions.checkPermission(player, command)) {
+            if(args.length >= 2) {
+                String field = args[0];
+                String message = "";
+                for(int i = 1; i < args.length; i++) {
+                    message += args[i] + " ";
                 }
+                if(!field.equalsIgnoreCase("mehr")) {
+                    if(editProfile(player, field, message).equalsIgnoreCase("ok")) {
+                        bChat.sendMessageToPlayer(player, "&6Done");
+                    }
+                }
+                return true;
             }
+            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
+            bChat.sendMessageToPlayer(player, "&6/editprofile&e [field] [value]");
             return true;
         }
-        bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-        bChat.sendMessageToPlayer(player, "&6/editprofile&e [field] [value]");
         return true;
     }
     
