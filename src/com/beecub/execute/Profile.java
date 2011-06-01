@@ -36,12 +36,12 @@ public class Profile {
                 for(int i = 1; i < args.length; i++) {
                     message += args[i] + " ";
                 }
-                if(!field.equalsIgnoreCase("mehr")) {
-                    if(editProfile(player, field, message).equalsIgnoreCase("ok")) {
-                        bChat.sendMessageToPlayer(player, "&6Done");
-                    }
+                if(editProfile(player, field, message)) {
+                    bChat.sendMessageToPlayer(player, "&6Done");
                 }
-                return true;
+                else {
+                    return true;
+                }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             bChat.sendMessageToPlayer(player, "&6/editprofile&e [field] [value]");
@@ -55,7 +55,7 @@ public class Profile {
         return true;
     }
     
-    public static String editProfile(Player player, String field, String value) {
+    public static boolean editProfile(Player player, String field, String value) {
         
         String ip = bConnector.getPlayerIPAddress(player);
         
@@ -69,6 +69,26 @@ public class Profile {
         url_items.put("value", value);
         
         JSONObject result = bConnector.hdl_com(url_items);
+        String check = bConnector.checkResult(result);
+        
+        if(check.equalsIgnoreCase("ok")) {
+            if(glizer.D) bChat.log("Profile edit action done");
+            return true;
+        }
+        else if(check.equalsIgnoreCase("not allowed")) {
+            if(glizer.D) bChat.log("Profile edit cant be done, its not allowed to edit this profile field");
+            bChat.sendMessageToPlayer(player, "&6Error, its not allowed to edit this profile field");
+            return false;
+        }
+        else if(check.equalsIgnoreCase("wrong data type")) {
+            if(glizer.D) bChat.log("Profile edit cant be done, wrong data type sent");
+            bChat.sendMessageToPlayer(player, "&6Error, wrong data type");
+            return false;
+        }
+        return true;
+        
+        
+        /*
         bChat.log(result.toString());
         
         //{"name":"beecub","realname":"","email":"","age":"0","status":"","mehr":"","lastip":"91.11.230.223",
@@ -82,6 +102,7 @@ public class Profile {
             if(glizer.D) e.printStackTrace();
         }        
         return "error";
+        */
     }
     
     public static String showProfile(Player player, String recipient) {

@@ -21,6 +21,9 @@ public class Comment {
                         bChat.sendMessageToPlayer(player, "&6Comment added");
                         return true;
                     }
+                    else {
+                        return true;
+                    }
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);

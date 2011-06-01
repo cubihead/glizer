@@ -35,7 +35,7 @@ public class Ban {
                         Player result = null;
                         result = glizer.plugin.getServer().getPlayer(recipient);
                         if(result != null) {
-                            result.kickPlayer("You were banned from this server. Check glizer.net");
+                            result.kickPlayer("You are banned from this server. Check glizer.net");
                         }
                         return true;
                     }
@@ -73,6 +73,9 @@ public class Ban {
                         }
                         return true;
                     }
+                    else {
+                        return true;
+                    }
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
@@ -84,29 +87,51 @@ public class Ban {
     
     public static boolean tempban(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
-            if(args.length >= 2) {
+            if(args.length >= 4) {
                 String message = "";
                 String recipient = args[0];
-                String time = args[1];
-                if(args.length >= 3) {
-                    for(int i = 2; i < args.length; i++) {
-                        message += args[i] + " ";
-                    }
+                String stime = args[1];
+                String timetype = args[2];
+                double dtime;
+                try {
+                    dtime = Double.valueOf(stime);
+                } catch(Exception e) {
+                    bChat.sendMessageToPlayer(player, "&6Error, wrong time value");
+                    return true;
+                }
+                if(timetype.equalsIgnoreCase("minutes") || timetype.equalsIgnoreCase("m")) {
+                    dtime = dtime * 60;
+                }
+                else if(timetype.equalsIgnoreCase("hours") || timetype.equalsIgnoreCase("h")) {
+                    dtime = dtime * 60 * 60;
+                }
+                else if(timetype.equalsIgnoreCase("days") || timetype.equalsIgnoreCase("d")) {
+                    dtime = dtime * 60 * 60 * 24;
+                }
+                else {
+                    bChat.sendMessageToPlayer(player, "&6Error, wrong time value");
+                    return true;
+                }
+                for(int i = 3; i < args.length; i++) {
+                    message += args[i] + " ";
                 }
                 if(message != null && message != "") {
-                    if(addNote(player, recipient, "0", "0", "0", message, "-100", time, "0")) {
+                    if(addNote(player, recipient, "0", "0", "0", message, "-100", String.valueOf(dtime), "0")) {
                         bChat.broadcastMessage("&6" + player.getName() + " banned player: &e" + recipient);
                         Player result = null;
                         result = glizer.plugin.getServer().getPlayer(recipient);
                         if(result != null) {
-                            result.kickPlayer("You were banned from this server. Check glizer.net");
+                            result.kickPlayer("You are banned from this server. Check glizer.net");
                         }
+                        return true;
+                    }
+                    else {
                         return true;
                     }
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-            bChat.sendMessageToPlayer(player, "&6/tempban&e [playername] [seconds] [message]");
+            bChat.sendMessageToPlayer(player, "&6/tempban&e [playername] [time] [minutes|hours|days] [message]");
             return true;
         }
         return true;
@@ -132,6 +157,9 @@ public class Ban {
                     if(addNote(player, recipient, "0", glob, "0", message, "100", "0", "0")) {
                         bBackupManager.addBanBackup(recipient);
                         bChat.broadcastMessage("&6" + player.getName() + " unbanned player: &e" + recipient);
+                        return true;
+                    }
+                    else {
                         return true;
                     }
                 } else {

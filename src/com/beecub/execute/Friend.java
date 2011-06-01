@@ -33,6 +33,9 @@ public class Friend {
                     bChat.sendMessageToPlayer(player, "Added Friend");
                     return true;
                 }
+                else {
+                    return true;
+                }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
             return true;
@@ -45,6 +48,9 @@ public class Friend {
             if(args.length == 1) {
                 if(friends(player, args[0], "remove")) {
                     bChat.sendMessageToPlayer(player, "Removed Friend");
+                    return true;
+                }
+                else {
                     return true;
                 }
             }
@@ -66,6 +72,25 @@ public class Friend {
         url_items.put("name", recipient);
 
         JSONObject result = bConnector.hdl_com(url_items);
+        String check = bConnector.checkResult(result);
+        
+        if(check.equalsIgnoreCase("ok")) {
+            if(glizer.D) bChat.log("Friend action done");
+            return true;
+        }
+        else if(check.equalsIgnoreCase("never connected")) {
+            if(glizer.D) bChat.log("Friend action cant be done, player never connected to this server");
+            bChat.sendMessageToPlayer(player, "&6Error, Player &e" + recipient + "&6 was never connected to this server");
+            return false;
+        }
+        else if(check.equalsIgnoreCase("not yourself")) {
+            if(glizer.D) bChat.log("Friend action cant be done, not to command user himself");
+            bChat.sendMessageToPlayer(player, "&6Error, you cant do this to yourself");
+            return false;
+        }
+        return true;
+        
+        /*
         String ok = null;
         try {
             ok = result.getString("response");
@@ -81,6 +106,7 @@ public class Friend {
             if(glizer.D) bChat.log("[glizer] Friend action cant be done", 2);
             return false;
         }
+        */
     }
     
     public static String listFriends(Player player, String recipient, String doAction) {
@@ -99,7 +125,7 @@ public class Friend {
         // {"_size":2,"0":{"username":"beecub","friend":"mxE333xm","added":"1306588609"},"1"
         //:
         //{"username":"beecub","friend":"machtzentrale19","added":"1306589033"}}
-
+        
         
         JSONObject result = bConnector.hdl_com(url_items);
         

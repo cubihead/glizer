@@ -3,7 +3,6 @@ package com.beecub.execute;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.beecub.glizer.glizer;
@@ -46,8 +45,9 @@ public class Rating {
                                 bChat.sendMessageToPlayer(player, "Success");
                                 return true;
                             }
-                            bChat.sendMessageToPlayer(player, "&6Server error");
-                            return true;
+                            else {
+                                return true;
+                            }
                         }
                     }
                     bChat.sendMessageToPlayer(player, "&6Rating has to be between &e0&6 and &e10&6");
@@ -77,6 +77,20 @@ public class Rating {
         url_items.put("rep", value);
         
         JSONObject result = bConnector.hdl_com(url_items);
+        String check = bConnector.checkResult(result);
+        
+        if(check.equalsIgnoreCase("ok")) {
+            if(glizer.D) bChat.log("Server rate action done");
+            return true;
+        }
+        else if(check.equalsIgnoreCase("wrong data type")) {
+            if(glizer.D) bChat.log("Server rate action cant be done, wrong data type sent");
+            bChat.sendMessageToPlayer(player, "&6Error, wrong data type");
+            return false;
+        }
+        return true;
+        
+        /*
         String ok = null;
         try {
             ok = result.getString("response");
@@ -92,5 +106,6 @@ public class Rating {
             if(glizer.D) bChat.log("Server rate action cant be done", 2);
             return false;
         }
+        */
     }
 }

@@ -29,6 +29,9 @@ public class Note {
                         bChat.sendMessageToPlayer(player, "&6Note added");
                         return true;
                     }
+                    else {
+                        return true;
+                    }
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);

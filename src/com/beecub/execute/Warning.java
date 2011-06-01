@@ -29,6 +29,9 @@ public class Warning {
                         bChat.sendMessageToPlayer(player, "&6Warning added");
                         return true;
                     }
+                    else {
+                        return true;
+                    }
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
