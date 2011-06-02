@@ -38,6 +38,7 @@ public class Profile {
                 }
                 if(editProfile(player, field, message)) {
                     bChat.sendMessageToPlayer(player, "&6Done");
+                    return true;
                 }
                 else {
                     return true;

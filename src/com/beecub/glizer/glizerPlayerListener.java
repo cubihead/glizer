@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,6 +27,9 @@ public class glizerPlayerListener extends PlayerListener {
 	public void onPlayerPreLogin(PlayerPreLoginEvent event) {
 
 	}
+    public void onPlayerLogin(PlayerLoginEvent event) {
+        
+    }
 	
     public void onPlayerJoin(PlayerJoinEvent event) {
 	    Player player = event.getPlayer();
