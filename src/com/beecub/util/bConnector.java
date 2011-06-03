@@ -56,8 +56,8 @@ public class bConnector {
             URL url = new URL("http://api.glizer.de/" + bConfigManager.key + "/");
             
             URLConnection conn = url.openConnection();
-            conn.setConnectTimeout(8000);
-            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(16000); // 8000
+            conn.setReadTimeout(30000); // 15000
             conn.setDoOutput(true);
 
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
@@ -113,37 +113,51 @@ public class bConnector {
         String ret = "";               
         if(result != null) {
             try {
-                if(result.getString("error").equalsIgnoreCase("1")) {
+                if(result.getInt("error") == 1) {
                     int errno = result.getInt("errno");
                     switch(errno) {
                         case 1000:
                             ret = "wrong ip";
+                            break;
                         case 1001:
                             ret = "wrong ip";
+                            break;
                         case 1002:
                             ret = "no record";
+                            break;
                         case 1003:
                             ret = "sql error";
+                            break;
                         case 1004:
                             ret = "missing variable";
+                            break;
                         case 1005:
                             ret = "to fast";
+                            break;
                         case 1006:
                             ret = "never connected";
+                            break;
                         case 1007:
                             ret = "exec not found";
+                            break;
                         case 1008:
                             ret = "wrong data type";
+                            break;
                         case 1009:
                             ret = "server as user";
+                            break;
                         case 1010:
                             ret = "not allowed";
+                            break;
                         case 1011:
                             ret = "not from here";
+                            break;
                         case 1012:
                             ret = "not yourself";
+                            break;
                         default:
                             ret = "unknown error";
+                            break;
                     }
                 }
             } catch(JSONException e) {

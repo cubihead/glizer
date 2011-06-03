@@ -51,6 +51,7 @@ public class glizer extends JavaPlugin {
 		pdfFile = this.getDescription();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.PLAYER_PRELOGIN, playerListener, Event.Priority.Lowest, this);
+		pm.registerEvent(Event.Type.PLAYER_LOGIN, playerListener, Event.Priority.Lowest, this);
 		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Lowest, this);
 	    
 		bConfigManager bConfigManager = new bConfigManager(this);
