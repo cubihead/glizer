@@ -53,22 +53,6 @@ public class bPermissions {
                 return true;
             }
         }
-        else if(command.equalsIgnoreCase("addbanwhitelist")) {
-            if(glizer.Permissions.permission(player, "glizer.ban.banwhitelist")) {
-                return true;
-            }
-            if(glizer.Permissions.permission(player, admin)) {
-                return true;
-            }
-        }
-        else if(command.equalsIgnoreCase("removebanwhitelist")) {
-            if(glizer.Permissions.permission(player, "glizer.ban.banwhitelist")) {
-                return true;
-            }
-            if(glizer.Permissions.permission(player, admin)) {
-                return true;
-            }
-        }
         else if(command.equalsIgnoreCase("unban")) {
             if(glizer.Permissions.permission(player, "glizer.ban.unban")) {
                 return true;

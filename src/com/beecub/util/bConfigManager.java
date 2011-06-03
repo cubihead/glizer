@@ -12,7 +12,6 @@ public class bConfigManager {
 	protected static glizer plugin;
     protected static Configuration conf;
     public static List<String> bannedPlayers = new LinkedList<String>();
-    public static List<String> banwhitelistPlayers = new LinkedList<String>();
     public static String key;
     public static String servername;
     public static String owner;

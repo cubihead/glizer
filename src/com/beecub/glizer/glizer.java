@@ -137,7 +137,7 @@ public class glizer extends JavaPlugin {
         url_items.put("version", pluginversion);
         url_items.put("bukkit", serverversion);
         url_items.put("slots", slots);
-        if(checkWhiteList() == false) url_items.put("whitelist", "0");
+        if(!checkWhiteList() || !bConfigManager.usewhitelist) url_items.put("whitelist", "0");
         else url_items.put("whitelist", "1");
         if(onlinemode == false) url_items.put("offlinemode", "0");
         else url_items.put("offlinemode", "1");

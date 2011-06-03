@@ -59,14 +59,6 @@ public class bCommandRouter {
                 Ban.unban(command, player, args);
                 return true;
             }
-            else if(command.equals("addbanwhitelist")) {
-                Ban.addbanwhitelist(command, player, args);
-                return true;
-            }
-            else if(command.equals("removebanwhitelist")) {
-                Ban.removebanwhitelist(command, player, args);
-                return true;
-            }
             else if(command.equals("note")) {
                 Note.note(command, player, args);
                 return true;

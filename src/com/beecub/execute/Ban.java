@@ -171,48 +171,7 @@ public class Ban {
             return true;
         }
         return true;
-    }
-    
-    public static boolean addbanwhitelist(String command, Player player, String[] args) {        
-        if(bPermissions.checkPermission(player, command)) {
-            if(args.length == 1) {
-                String name = args[0];
-                if(bBackupManager.addBanWhiteList(name)) {
-                    bChat.sendMessageToPlayer(player, "&6Completed");
-                    return true;
-                }
-                else {
-                    bChat.sendMessageToPlayer(player, "&6Requested player is already on ban whitelist");
-                    return true;
-                }
-            }
-            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-            bChat.sendMessageToPlayer(player, "&6/addbanwhitelist&e [playername]");
-            return true;
-        }
-        return true;
-    }
-    
-    public static boolean removebanwhitelist(String command, Player player, String[] args) {        
-        if(bPermissions.checkPermission(player, command)) {
-            if(args.length == 1) {
-                String name = args[0];
-                if(bBackupManager.removeBanWhiteList(name)) {
-                    bChat.sendMessageToPlayer(player, "&6Completed");
-                    return true;
-                }
-                else {
-                    bChat.sendMessageToPlayer(player, "&6Requested player is not on ban whitelist");
-                    return true;
-                }
-            }
-            bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-            bChat.sendMessageToPlayer(player, "&6/removebanwhitelist&e [playername]");
-            return true;
-        }
-        return true;
-    }
-    
+    }    
     
     public static boolean addNote(Player player, String recipient, String fhide, String fglobal, String fprivate, String message, String reputation, String timelimit, String ban) {
         

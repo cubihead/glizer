@@ -14,6 +14,7 @@ import com.beecub.util.bPermissions;
 import com.beecub.util.bWhitelist;
 
 public class Whitelist {
+    
     public static boolean whitelistAdd(String command, Player player, String[] args) {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
@@ -23,11 +24,12 @@ public class Whitelist {
                         bChat.sendMessageToPlayer(player, "&6Added to Whitelist");
                         return true;
                     }
+                    return true;
                 }
                 bChat.sendMessageToPlayer(player, "&6Cannot add this player to whitelist");
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-            bChat.sendMessageToPlayer(player, "&6/note&e [playername] [message]");
+            bChat.sendMessageToPlayer(player, "&6/note&e [playername]");
             return true;
         }
         return true;
@@ -38,15 +40,16 @@ public class Whitelist {
             if(args.length == 1) {
                 String recipient = args[0];
                 if(whitelist(player, recipient, "remove")) {
-                    if(bWhitelist.addWhiteList(recipient)) {
-                        bChat.sendMessageToPlayer(player, "&Removed from Whitelist");
+                    if(bWhitelist.removeWhiteList(recipient)) {
+                        bChat.sendMessageToPlayer(player, "&6Removed from Whitelist");
                         return true;
                     }
+                    return true;
                 }
                 bChat.sendMessageToPlayer(player, "&6Cannot remove this player from whitelist");
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-            bChat.sendMessageToPlayer(player, "&6/note&e [playername] [message]");
+            bChat.sendMessageToPlayer(player, "&6/note&e [playername]");
             return true;
         }
         return true;
@@ -61,7 +64,7 @@ public class Whitelist {
         url_items.put("do", action);
         url_items.put("account", player.getName());
         url_items.put("ip", ip);
-        url_items.put("username", recipient);
+        url_items.put("name", recipient);
         
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;

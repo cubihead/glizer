@@ -6,10 +6,6 @@ website: glizer.net
 description: >
              Minecraft Globalizer
 commands:
-  command:
-    description:
-    usage: |
-           /<command>
   ban:
     description: Ban player
     usage: |
@@ -26,14 +22,6 @@ commands:
     description: Temporary Ban
     usage: |
            /<command> [name] [time] [comment]
-  removebanwhitelist:
-    description: Remove a global banned whitelisted player (on your server)
-    usage: |
-           /<command> [name]
-  addbanwhitelist:
-    description: Whitelist a player from global bans (on your server)
-    usage: |
-           /<command> [name]
   unban:
     description: Unban player
     usage: |
@@ -107,15 +95,15 @@ commands:
     usage: |
            /<command> [page]
   glizer:
-    description: reload glizer config
+    description: Reload glizer config
     usage: |
            /<command> [reload]
   addwhitelist:
-    description: reload glizer config
+    description: Add player to whitelist
     usage: |
            /<command> [name]
   removewhitelist:
-    description: reload glizer config
+    description: Remove player from whitelist
     usage: |
            /<command> [name]
   theanswertolifetheuniverseandeverything:
