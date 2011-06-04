@@ -31,8 +31,8 @@ public class bCommandRouter {
                 // not used
                 return true;
             }
-            else if(command.equals("glizer")) {
-                Other.glizer(command, player, args);
+            else if(command.equals("glizerreload")) {
+                Other.glizerreload(command, player, args);
                 return true;
             }
             else if(command.equals("glizerhelp")) {
@@ -141,7 +141,7 @@ public class bCommandRouter {
             }
             
         } else {
-            bChat.sendMessageToServer("&6Cannot use this command from console");
+            bChat.sendMessageToServer("&6Commands from console: Coming soon");
             return true;
         }
     }

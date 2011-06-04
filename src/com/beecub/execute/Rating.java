@@ -5,11 +5,11 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 import org.json.JSONObject;
 
+import com.beecub.command.bPermissions;
 import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
 import com.beecub.util.bConnector;
 import com.beecub.util.bMessageManager;
-import com.beecub.util.bPermissions;
 
 
 public class Rating {
@@ -50,7 +50,7 @@ public class Rating {
                             }
                         }
                     }
-                    bChat.sendMessageToPlayer(player, "&6Rating has to be between &e0&6 and &e10&6");
+                    bChat.sendMessageToPlayer(player, "&6Rating has to be between &e0&6 and &e10&6 (10 is best)");
                     return true;
                 }
                 catch(Exception e) {
@@ -59,7 +59,7 @@ public class Rating {
                 }
             }
             bChat.sendMessageToPlayer(player, bMessageManager.messageWrongCommandUsage);
-            bChat.sendMessageToPlayer(player, "&6/rateserver &e[value]");
+            bChat.sendMessageToPlayer(player, "&6/rateserver &e[value|0-10 (10 is best)]");
             return true;
         }
         return true;

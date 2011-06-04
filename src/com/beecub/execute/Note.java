@@ -2,9 +2,9 @@ package com.beecub.execute;
 
 import org.bukkit.entity.Player;
 
+import com.beecub.command.bPermissions;
 import com.beecub.util.bChat;
 import com.beecub.util.bMessageManager;
-import com.beecub.util.bPermissions;
 
 public class Note {
     

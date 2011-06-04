@@ -6,12 +6,12 @@ import org.bukkit.entity.Player;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.beecub.command.bPermissions;
 import com.beecub.glizer.glizer;
 import com.beecub.util.bBackupManager;
 import com.beecub.util.bChat;
 import com.beecub.util.bConnector;
 import com.beecub.util.bMessageManager;
-import com.beecub.util.bPermissions;
 
 public class Ban {
     

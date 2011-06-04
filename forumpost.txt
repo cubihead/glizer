@@ -1,0 +1,61 @@
+glizer - Minecraft Globalizer:
+[B]Version:[/B] Alpha 1.0.0 (Christi)
+[B][LIST]
+[*]Download
+[*]Website/Webinterface
+[*]Wiki
+[*]Installation
+[*]Commands
+[*]Permissions
+[/LIST][/B]
+
+Glizer provides a huge range of functions to globalize minecraft.
+
+
+[B]Features:[/B]
+All Features are optional, choose yourself what you want to use.
+
+[LIST]
+[*]Global - Bans (also locals ;))
+[INDENT]Ban-Import from mcbans[/INDENT]
+[INDENT]Ban-Sharing[/INDENT]
+[INDENT]Ban-Whitelist[/INDENT]
+[*]Global - Notes
+[*]Global - Warnings
+[*]Global - Comments
+[*]Global - Profiles
+[*]Global - Friends
+[*]Global - Ratings
+[*]Global - Whitelist
+[*]Huge Webinterface
+[*]Serverlist
+[*]Statistics
+[*]Community based
+[*]Free for ever (very important for us!)
+[/LIST]
+[B]In progress:[/B]
+[LIST]
+[*]Global Messaging
+[*]API for plugins
+[*]News-Feeds
+[*]Advanced Statistics
+[/LIST]
+
+[B]Requirements:[/B]
+[LIST]
+[*]Permissions
+[/LIST]
+
+Post bugs and feature requests in our forum.
+Follow us on twitter.
+
+
+[B]Changelog:[/B]
+Version 1.0.0
+[LIST]
+[*]Alpha-Release
+[/LIST]
+Full Changelog
+
+
+glizer is a joint project of beecub and wmchris.

@@ -44,7 +44,7 @@ public class bConnector {
                     data = data + "&" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(val, "UTF-8");
             }
         } catch (UnsupportedEncodingException e) {
-            glizer.log.info("Error parsing");
+            bChat.log("Error parsing", 2);
         }
         return data;
     }
@@ -81,7 +81,7 @@ public class bConnector {
             rd.close();
             return result;
         } catch (Exception e) {
-            System.out.println("Error on request from API");
+            bChat.log("Error on request from API", 2);
         }
         return "";
     }
@@ -91,7 +91,7 @@ public class bConnector {
             JSONObject json = new JSONObject(json_text);
             return json;
         } catch (JSONException e) {
-            glizer.log.info("Receiving data failed");
+            bChat.log("Receiving data failed", 2);
         }
         return null;
     }
@@ -171,9 +171,9 @@ public class bConnector {
             }
         }
         else {
-            ret = "null";
+            ret = "Error - server connection failed, aborting actions";
         }
-        if(glizer.D) bChat.log("[glizer debug] " + ret);
+        if(glizer.D) bChat.log("[glizer error]" + ret);
         return ret;
     }
 }

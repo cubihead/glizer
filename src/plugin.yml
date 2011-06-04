@@ -1,47 +1,47 @@
 name: glizer
 main: com.beecub.glizer.glizer
-version: 0.0.1
+version: 1.0.0
 author: beecub
-website: glizer.net
+website: 'http://glizer.net/'
 description: >
              Minecraft Globalizer
 commands:
   ban:
     description: Ban player
     usage: |
-           /<command> [name] [comment]
+           /<command> [playername] [message]
   globalban:
     description: Global ban
     usage: |
-           /<command> [name] [comment]
+           /<command> [playername] [message]
   localban:
     description: Local ban
     usage: |
-           /<command> [name] [comment]
+           /<command> [playername] [message]
   tempban:
     description: Temporary Ban
     usage: |
-           /<command> [name] [time] [comment]
+           /<command> [playername] [time] [minutes|hours|days] [message]
   unban:
     description: Unban player
     usage: |
-           /<command> [name] [comment]
+           /<command> [playername] [message]
   note:
     description: Admin comment to player
     usage: |
-           /<command> [name] [value] [comment]
+           /<command> [playername] [value] [message]
   notes:
     description: Show admin comments to player
     usage: |
-           /<command> [name]
+           /<command> [playername]
   warn:
     description: Caution a player
     usage: |
-           /<command> [name] [value] [comment]
+           /<command> [playername] [value] [comment]
   warnings:
     description: Show cautions to a player
     usage: |
-           /<command> [name]
+           /<command> [playername]
   register:
     description: Register player to system
     usage: |
@@ -49,15 +49,15 @@ commands:
   comment:
     description: Add comment to player
     usage: |
-           /<command> [name] [comment]
+           /<command> [playername] [comment]
   comments:
     description: Show comments to player
     usage: |
-           /<command> [name]
+           /<command> [playername]
   rateplayer:
     description: Rate player
     usage: |
-           /<command> [name] [value]
+           /<command> [playername] [value]
   rateserver:
     description: Rate server
     usage: |
@@ -65,11 +65,11 @@ commands:
   profile:
     description: Show players profile
     usage: |
-           /<command> [name]
+           /<command> [playername]
   editprofile:
     description: Edit profile field
     usage: |
-           /<command> [fieldname] [text/value]
+           /<command> [fieldplayername] [text|value]
   clearprofile:
     description: Clear whole profile
     usage: |
@@ -77,35 +77,39 @@ commands:
   gm:
     description: Send message to a player, whereever on which server he is connectet
     usage: |
-           /<command> [name] [text]
+           /<command> [playername] [text]
   friends:
-    description: Show all online friends and on which server theyre playing
+    description: Show all friends
+    usage: |
+           /<command>
+  friendsonline:
+    description: Show all online friends and on which server theyre online
     usage: |
            /<command>
   addfriend:
     description: Add a player to your friend list
     usage: |
-           /<command> [name]
+           /<command> [playername]
   removefriend:
     description: Remove a friend from your friend list
     usage: |
-           /<command> [name]
+           /<command> [playername]
   glizerhelp:
     description: Help to glizer plugin
     usage: |
            /<command> [page]
-  glizer:
-    description: Reload glizer config
+  glizerreload:
+    description: Reload glizer configuration file
     usage: |
            /<command> [reload]
   addwhitelist:
     description: Add player to whitelist
     usage: |
-           /<command> [name]
+           /<command> [playername]
   removewhitelist:
     description: Remove player from whitelist
     usage: |
-           /<command> [name]
+           /<command> [playername]
   theanswertolifetheuniverseandeverything:
     description: The Answer to Life the Universum and Everything.
     usage: |

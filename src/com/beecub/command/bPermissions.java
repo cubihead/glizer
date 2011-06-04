@@ -1,8 +1,10 @@
-package com.beecub.util;
+package com.beecub.command;
 
 import org.bukkit.entity.Player;
 
 import com.beecub.glizer.glizer;
+import com.beecub.util.bChat;
+import com.beecub.util.bMessageManager;
 
 public class bPermissions {
 
@@ -155,7 +157,7 @@ public class bPermissions {
             }
         }
         else if(command.equalsIgnoreCase("gm")) {
-            if(glizer.Permissions.permission(player, "glizer.other.gm")) {
+            if(glizer.Permissions.permission(player, "glizer.message.gm")) {
                 return true;
             }
             if(glizer.Permissions.permission(player, user)) {
@@ -202,7 +204,7 @@ public class bPermissions {
                 return true;
             }
         }
-        else if(command.equalsIgnoreCase("glizer")) {
+        else if(command.equalsIgnoreCase("glizerreload")) {
             if(glizer.Permissions.permission(player, "glizer.reload")) {
                 return true;
             }

@@ -2,10 +2,10 @@ package com.beecub.execute;
 
 import org.bukkit.entity.Player;
 
+import com.beecub.command.bPermissions;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
 import com.beecub.util.bMessageManager;
-import com.beecub.util.bPermissions;
 
 
 public class Other {
@@ -46,7 +46,7 @@ public class Other {
         return true;
     }
     
-    public static boolean glizer(String command, Player player, String[] args) {
+    public static boolean glizerreload(String command, Player player, String[] args) {
         
         if(bPermissions.checkPermission(player, command)) {
             if(args.length <= 1) {

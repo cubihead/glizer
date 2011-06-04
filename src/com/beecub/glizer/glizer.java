@@ -41,7 +41,7 @@ public class glizer extends JavaPlugin {
 	public static boolean onlinemode = false;
 	public static String serverip;
 	public static String serverport;
-	public static boolean offline = true;
+	//public static boolean offline = true;
 	public static boolean D;
 	public static glizer plugin;
 	
@@ -78,14 +78,14 @@ public class glizer extends JavaPlugin {
 		
 		if(heartbeat(this)) {
 		}
-		    
+		
 		PluginDescriptionFile pdfFile = this.getDescription();
-		bChat.log(messagePluginName + " version " + pdfFile.getVersion() + " is enabled!" );
+		bChat.log(messagePluginName + " Alpha " + pdfFile.getVersion() + " (Christi)" + " is enabled!" );
 	}
 	public void onDisable() {
 	    if(serverLogout()) {
 	    }
-		bChat.log(messagePluginName + " version " + pdfFile.getVersion() + " disabled!");
+		bChat.log(messagePluginName + " Alpha " + pdfFile.getVersion() + " (Christi)" + " disabled!");
 	}
 	
 	// onCommand
@@ -161,18 +161,18 @@ public class glizer extends JavaPlugin {
             ok = result.getString("response");
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
-            bChat.log("Cant establish a connection to glizer-server! glizer is now in offline mode", 2);
-            offline = true;
+            bChat.log("Cant establish a connection to glizer-server!"/* glizer is now in offline mode"*/, 2);
+            //offline = true;
             return false;
         } 
         if(ok.equalsIgnoreCase("ok")) {
             bChat.log("Connected to glizer-server");
-            offline = false;
+            //offline = false;
             return true;
         }
         else {
             bChat.log("Failure! Wrong server configuration data sent", 2);
-            offline = true;
+            //offline = true;
             return false;
         }
 	}
