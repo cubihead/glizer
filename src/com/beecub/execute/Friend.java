@@ -30,7 +30,7 @@ public class Friend {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
                 if(friends(player, args[0], "add")) {
-                    bChat.sendMessageToPlayer(player, "Added Friend");
+                    bChat.sendMessageToPlayer(player, "&6Added Friend");
                     return true;
                 }
                 else {
@@ -47,7 +47,7 @@ public class Friend {
         if(bPermissions.checkPermission(player, command)) {
             if(args.length == 1) {
                 if(friends(player, args[0], "remove")) {
-                    bChat.sendMessageToPlayer(player, "Removed Friend");
+                    bChat.sendMessageToPlayer(player, "&6Removed Friend");
                     return true;
                 }
                 else {

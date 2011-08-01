@@ -1,8 +1,8 @@
 package com.beecub.glizer;
 
-import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
-import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 
 public class glizerBlockListener extends BlockListener {
 	
@@ -13,29 +13,10 @@ public class glizerBlockListener extends BlockListener {
 		plugin = instance;
 	}
 	
-	public void onSignChange(SignChangeEvent event) {
-		Player player = event.getPlayer();
-		String[] text = event.getLines();
-	    int i = 0;
-		if (glizer.permissions) {
-			if(glizer.Permissions.permission(player, "glizer.signColor")) {
-			    for (String line : text)
-			    {
-			      line = line.replaceAll("&", "§");
-			      line = line.replaceAll("§§", "&");
-			      event.setLine(i, line);
-			      i++;
-			    }
-			}
-		}
-		else {
-		    for (String line : text)
-		    {
-		      line = line.replaceAll("&", "§");
-		      line = line.replaceAll("§§", "&");
-		      event.setLine(i, line);
-		      i++;
-		    }
-		}
+	public void onBlockPlace(BlockPlaceEvent event) {
+	    
+	}
+	public void onBlockBreak(BlockBreakEvent event) {
+	    
 	}
 }

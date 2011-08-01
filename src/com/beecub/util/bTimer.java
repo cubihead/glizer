@@ -30,6 +30,7 @@ public class bTimer extends TimerTask {
         }
     }
     
+    @SuppressWarnings("static-access")
     public boolean heartbeat(Player [] players, int count) {        
         if(count > 0) {
             HashMap<String, String> url_items = new HashMap<String, String>();        
@@ -48,9 +49,10 @@ public class bTimer extends TimerTask {
             
             JSONObject result = bConnector.hdl_com(url_items);
             String check = bConnector.checkResult(result);
-                        
+            
             if(check.equalsIgnoreCase("ok")) {
                 bChat.log("Heartbeat, Online Players: " + players.length);
+                glizer.offline = false;
                 return true;
             }
             else if(check.equalsIgnoreCase("to fast")) {

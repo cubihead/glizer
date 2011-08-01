@@ -44,7 +44,7 @@ public class bConnector {
                     data = data + "&" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(val, "UTF-8");
             }
         } catch (UnsupportedEncodingException e) {
-            bChat.log("Error parsing", 2);
+            if(glizer.D) bChat.log("Error parsing", 2);
         }
         return data;
     }
@@ -81,7 +81,7 @@ public class bConnector {
             rd.close();
             return result;
         } catch (Exception e) {
-            bChat.log("Error on request from API", 2);
+            if(glizer.D) bChat.log("Error on request from API", 2);
         }
         return "";
     }
@@ -91,7 +91,7 @@ public class bConnector {
             JSONObject json = new JSONObject(json_text);
             return json;
         } catch (JSONException e) {
-            bChat.log("Receiving data failed", 2);
+            if(glizer.D) bChat.log("Receiving data failed", 2);
         }
         return null;
     }

@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.beecub.command.bCommandRouter;
+import com.beecub.execute.Backup;
 import com.beecub.util.bBackupManager;
 import com.beecub.util.bChat;
 import com.beecub.util.bConfigManager;
@@ -41,13 +42,13 @@ public class glizer extends JavaPlugin {
 	public static boolean onlinemode = false;
 	public static String serverip;
 	public static String serverport;
-	//public static boolean offline = true;
+	public static boolean offline = false;
 	public static boolean D;
 	public static glizer plugin;
 	
 	@SuppressWarnings({ "unused", "static-access" })
     public void onEnable() {
-
+	    
 		pdfFile = this.getDescription();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.PLAYER_PRELOGIN, playerListener, Event.Priority.Lowest, this);
@@ -78,6 +79,8 @@ public class glizer extends JavaPlugin {
 		
 		if(heartbeat(this)) {
 		}
+		
+		Backup.getPlayers();
 		
 		PluginDescriptionFile pdfFile = this.getDescription();
 		bChat.log(messagePluginName + " Alpha " + pdfFile.getVersion() + " (Christi)" + " is enabled!" );
@@ -157,8 +160,13 @@ public class glizer extends JavaPlugin {
         
         JSONObject result = bConnector.hdl_com(url_items);
         String ok = null;
+        int version = 0;
+        int protocol = 1000;
         try {
             ok = result.getString("response");
+            version = result.getInt("version");
+            protocol = result.getInt("protocol");
+            
         } catch (JSONException e) {
             if(glizer.D) e.printStackTrace();
             bChat.log("Cant establish a connection to glizer-server!"/* glizer is now in offline mode"*/, 2);
@@ -167,7 +175,13 @@ public class glizer extends JavaPlugin {
         } 
         if(ok.equalsIgnoreCase("ok")) {
             bChat.log("Connected to glizer-server");
-            //offline = false;
+            offline = false;
+            if(version > Integer.valueOf(pluginversion)) {
+                bChat.log("A new version of glizer is available!");
+            }
+            if(protocol > 1) {
+                bChat.log("Update glizer instantly!", 2);
+            }
             return true;
         }
         else {

@@ -25,7 +25,7 @@ public class bBackupManager {
     private static void load() {
         backupban.load();
         
-        bannedPlayers = backupban.getStringList("", bannedPlayers);
+        bannedPlayers = backupban.getStringList("ban", bannedPlayers);
     }
     
     public static void reload() {
@@ -53,7 +53,7 @@ public class bBackupManager {
     
     public static boolean removeBanBackup(String name) {
         if(bannedPlayers.contains(name.toLowerCase())) {
-            bannedPlayers.remove(bannedPlayers.indexOf(name));
+            bannedPlayers.remove(bannedPlayers.indexOf(name.toLowerCase()));
             backupban.setProperty("ban", bannedPlayers);
             backupban.save();
             return true;
@@ -62,8 +62,8 @@ public class bBackupManager {
     }
     
     public static boolean addBanBackup(String name) {
-        if(bannedPlayers.contains(name.toLowerCase())) {
-            bannedPlayers.add(name);
+        if(!bannedPlayers.contains(name.toLowerCase())) {
+            bannedPlayers.add(name.toLowerCase());
             backupban.setProperty("ban", bannedPlayers);
             backupban.save();
             return true;
@@ -76,5 +76,12 @@ public class bBackupManager {
             return true;
         }
         return false;
+    }
+    
+    public static boolean clearBanList() {
+        bannedPlayers.clear();
+        backupban.setProperty("ban", bannedPlayers);
+        backupban.save();
+        return true;
     }
 }

@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerPreLoginEvent;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.beecub.util.bBackupManager;
@@ -42,7 +41,10 @@ public class glizerPlayerListener extends PlayerListener {
         url_items.put("username", player.getName());
         //url_items.put("userip", ip);
         
-        JSONObject result = bConnector.hdl_com(url_items);
+        JSONObject result = null;
+        if(!glizer.offline) {
+           result = bConnector.hdl_com(url_items);
+        }
         
         
         // check whitelist
@@ -67,9 +69,10 @@ public class glizerPlayerListener extends PlayerListener {
                 bChat.log("Player " + player.getName() + " is banned from this server. Kick", 2);
                 kick = true;
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             if(glizer.D) e.printStackTrace();
-            bChat.log("Unable to check player " + player.getName() + "!", 2);
+            glizer.offline = true;
+            bChat.log("Unable to check player " + player.getName() + "! Swichting to backup.", 2);
             if(!bBackupManager.checkBanList(player.getName())) {
                 kick = false;
             }

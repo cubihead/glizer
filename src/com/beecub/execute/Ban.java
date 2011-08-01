@@ -155,7 +155,7 @@ public class Ban {
                     String glob = "0";
                     if(global) glob = "1";
                     if(addNote(player, recipient, "0", glob, "0", message, "100", "0", "0")) {
-                        bBackupManager.addBanBackup(recipient);
+                        bBackupManager.removeBanBackup(recipient);
                         bChat.broadcastMessage("&6" + player.getName() + " unbanned player: &e" + recipient);
                         return true;
                     }
@@ -272,7 +272,7 @@ public class Ban {
             //return friends;
             return "Ok";
         } catch (JSONException e3) {
-            e3.printStackTrace();
+            if(glizer.D) e3.printStackTrace();
             return "&6Nothing here!";
         }
     }

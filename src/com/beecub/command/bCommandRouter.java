@@ -15,12 +15,14 @@ import com.beecub.execute.Warning;
 import com.beecub.execute.Whitelist;
 import com.beecub.glizer.glizer;
 import com.beecub.util.bChat;
+import com.beecub.util.bConfigManager;
 
 
 
 public class bCommandRouter {
     public static boolean handleCommands(CommandSender sender, Command c, String commandLabel, String[] args) {
         
+        String ret = "disabled";
         String command = c.getName().toLowerCase();
         if(glizer.D) bChat.log("[glizer] Command: " + command);
         
@@ -40,24 +42,34 @@ public class bCommandRouter {
                 return true;
             }
             else if(command.equals("ban")) {
-                Ban.ban(command, player, args);
-                return true;
+                if(bConfigManager.usebansystem) {
+                    Ban.ban(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("globalban")) {
-                Ban.globalban(command, player, args);
-                return true;
+                if(bConfigManager.usebansystem && bConfigManager.useglobalbans) {
+                    Ban.globalban(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("localban")) {
-                Ban.localBan(command, player, args);
-                return true;
+                if(bConfigManager.usebansystem) {
+                    Ban.localBan(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("tempban")) {
-                Ban.tempban(command, player, args);
-                return true;
+                if(bConfigManager.usebansystem) {
+                    Ban.tempban(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("unban")) {
-                Ban.unban(command, player, args);
-                return true;
+                if(bConfigManager.usebansystem) {
+                    Ban.unban(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("note")) {
                 Note.note(command, player, args);
@@ -80,48 +92,68 @@ public class bCommandRouter {
                 return true;
             }            
             else if(command.equals("comment")) {
-                Comment.comment(command, player, args);
-                return true;
+                if(bConfigManager.usecomments) {
+                    Comment.comment(command, player, args);
+                    return true;
+                }
             }            
             else if(command.equals("comments")) {
-                Comment.comments(command, player, args);
-                return true;
+                if(bConfigManager.usecomments) {
+                    Comment.comments(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("rateplayer")) {
-                Rating.rateplayer(command, player, args);
-                return true;
+                if(bConfigManager.useratings) {
+                    Rating.rateplayer(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("rateserver")) {
-                Rating.rateserver(command, player, args);
-                return true;
+                if(bConfigManager.useratings) {
+                    Rating.rateserver(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("profile")) {
-                Profile.profile(command, player, args);
-                return true;
+                if(bConfigManager.useprofiles) {
+                    Profile.profile(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("editprofile")) {
-                Profile.editprofile(command, player, args);
-                return true;
+                if(bConfigManager.useprofiles) {
+                    Profile.editprofile(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("clearprofile")) {
-                Profile.clearprofile(command, player, args);
-                return true;
+                if(bConfigManager.useprofiles) {
+                    Profile.clearprofile(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("gm")) {
                 Other.gm(command, player, args);
                 return true;
             }
             else if(command.equals("addfriend")) {
-                Friend.addfriend(command, player, args);
-                return true;
+                if(bConfigManager.useprofiles) {
+                    Friend.addfriend(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("removefriend")) {
-                Friend.removefriend(command, player, args);
-                return true;
+                if(bConfigManager.useprofiles) {
+                    Friend.removefriend(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("friends")) {
-                Friend.friends(command, player, args);
-                return true;
+                if(bConfigManager.useprofiles) {
+                    Friend.friends(command, player, args);
+                    return true;
+                }
             }
             else if(command.equals("addwhitelist")) {
                 Whitelist.whitelistAdd(command, player, args);
@@ -136,7 +168,14 @@ public class bCommandRouter {
                 return true;
             }
             else {
-                bChat.sendMessageToPlayer(player, "Not a glizer command");
+                bChat.sendMessageToPlayer(player, "&6Not a glizer command");
+                return true;
+            }
+            if(ret.equalsIgnoreCase("disabled")) {
+                bChat.sendMessageToPlayer(player, "&Feature disabled");
+                return true;
+            }
+            else {
                 return true;
             }
             
